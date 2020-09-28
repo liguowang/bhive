@@ -1,0 +1,11 @@
+LICENSE.txt
+MANIFEST.in
+setup.py
+lib/SCAT.egg-info/PKG-INFO
+lib/SCAT.egg-info/SOURCES.txt
+lib/SCAT.egg-info/dependency_links.txt
+lib/SCAT.egg-info/not-zip-safe
+lib/SCAT.egg-info/requires.txt
+lib/SCAT.egg-info/top_level.txt
+lib/scat_module/ireader.py
+test/test.fa

@@ -1,0 +1,6 @@
+numpy
+pysam
+pandas
+sklearn
+logomaker
+matplotlib
