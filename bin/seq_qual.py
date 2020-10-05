@@ -29,6 +29,8 @@ def main():
 		help="Input file in FASTQ (https://en.wikipedia.org/wiki/FASTQ_format#) format.")
 	parser.add_option("-o","--outfile",action="store",type="string", dest="out_file",
 		help="The prefix of output files.")
+	parser.add_option("-n","--nseq-limit",action="store",type="int", dest="max_seq",default=None,
+		help="Only process this many sequences and stop. default=%default (generate logo from ALL sequences).")
 	parser.add_option("--cell-width",action="store",type="int", dest="cell_width",default = 12,
 		help="Cell width (in points) of the heatmap. default=%default")
 	parser.add_option("--cell-height",action="store",type="int", dest="cell_height",default = 10,
@@ -58,7 +60,7 @@ def main():
 			sys.exit(0)
 
 	file_iter = fastq.fastq_iter(options.in_file, mode = 'qual')
-	qual_mat = fastq.qual2countMat(file_iter)
+	qual_mat = fastq.qual2countMat(file_iter, limit=options.max_seq)
 	qual_mat = qual_mat.T
 	qual_mat.sort_index(inplace=True, ascending=False)
 

@@ -74,7 +74,7 @@ def fastq_iter(infile, mode = 'seq'):
 				yield q
 			count = 0
 
-def qual2countMat(q_obj,step_size=100000):
+def qual2countMat(q_obj,limit, step_size=100000):
 	"""
 	Generate count data frame.
 
@@ -82,6 +82,8 @@ def qual2countMat(q_obj,step_size=100000):
 	----------
 	q_obj : iterable
 		Generator returned by fastq_iter
+	limit : int
+		Only read this many sequences.
 	step_size : int
 		Output progress report every step_size.
 
@@ -101,6 +103,10 @@ def qual2countMat(q_obj,step_size=100000):
 				dat[i][q_score] += 1
 		if count % step_size == 0:
 			print("%d quality sequences finished\r" % count, end=' ', file=sys.stderr)
+		if limit is not None:
+			if count >= limit:
+				break
+
 	logging.info("%d quality sequences finished" % count)
 
 	logging.info("Make data frame from dict of dict ...")
@@ -204,17 +210,17 @@ def make_logo(mat, outfile, exclude_N=False, font_name='sans', stack_order='big_
 		if highlight_start < 0 or highlight_end < 0 or highlight_start > highlight_end:
 			logging.error("Incorrect highlight positions")
 			sys.exit(0)
-	logging.info("Mean-centered logo saved to \"%s\"." % (outfile + '.mean_centered_logo.' + oformat))
+	logging.info("Mean-centered logo saved to \"%s\"." % (outfile + '.logo_mean_centered.' + oformat))
 	logo = logomaker.Logo(mat,center_values=True,color_scheme=color, font_name = font_name, stack_order = stack_order, flip_below = flip_below, shade_below = shade_below, fade_below = fade_below)
 	if isinstance(highlight_start, int) and isinstance(highlight_end, int):
 		logging.info("Highlight logo from %d to %d" % (highlight_start, highlight_end))
 		logo.highlight_position_range(pmin = highlight_start, pmax = highlight_end)
-	plt.savefig(outfile + '.mean_centered_logo.%s' % oformat.lower())
+	plt.savefig(outfile + '.logo.mean_centered.%s' % oformat.lower())
 
-	logging.info("Raw logo saved to \"%s\"." % (outfile + '.raw_logo.' + oformat))
+	logging.info("Logo saved to \"%s\"." % (outfile + '.logo.' + oformat))
 	logo = logomaker.Logo(mat,center_values=False,color_scheme=color, font_name = font_name, stack_order = stack_order, flip_below = flip_below, shade_below = shade_below, fade_below = fade_below)
 	if isinstance(highlight_start, int) and isinstance(highlight_end, int):
 		logging.info("Highlight logo from %d to %d" % (highlight_start, highlight_end))
 		logo.highlight_position_range(pmin = highlight_start, pmax = highlight_end)
-	plt.savefig(outfile + '.raw_logo.%s' % oformat.lower())
+	plt.savefig(outfile + '.logo.%s' % oformat.lower())
 

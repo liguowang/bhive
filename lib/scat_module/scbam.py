@@ -10,7 +10,6 @@ import collections
 import logging
 import re
 import pandas as pd
-import subprocess
 
 def diff_str(s1, s2):
 	'''
@@ -34,7 +33,7 @@ def diff_str(s1, s2):
 		results.append([pos, s1[pos], s2[pos]])
 	return results
 
-def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
+def barcode_stat(infile, outfile, step_size=10000, limit=2000000, CR_tag = 'CR', CB_tag = 'CB', UR_tag = 'UR', UB_tag = 'UB'):
 	'''
 	Analzye barcode in BAM file.
 
@@ -74,9 +73,9 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
 
 			original_CB = ''
 			corrected_CB = ''
-			if 'CR' in tag_dict and 'CB' in tag_dict:
-				original_CB = tag_dict['CR'].replace('-1','')
-				corrected_CB = tag_dict['CB'].replace('-1','')
+			if CR_tag in tag_dict and CB_tag in tag_dict:
+				original_CB = tag_dict[CR_tag].replace('-1','')
+				corrected_CB = tag_dict[CB_tag].replace('-1','')
 				CB_freq[corrected_CB] +=1
 				if original_CB != corrected_CB:
 					CB_diff += 1
@@ -92,9 +91,9 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
 
 			original_UMI = ''
 			corrected_UMI = ''
-			if 'UR' in tag_dict and 'UB' in tag_dict:
-				original_UMI = tag_dict['UR'].replace('-1','')
-				corrected_UMI = tag_dict['UB'].replace('-1','')
+			if UR_tag in tag_dict and UB_tag in tag_dict:
+				original_UMI = tag_dict[UR_tag].replace('-1','')
+				corrected_UMI = tag_dict[UB_tag].replace('-1','')
 				UMI_freq[corrected_UMI] += 1
 				if original_UMI != corrected_UMI:
 					UMI_diff += 1
@@ -119,10 +118,10 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
 	logging.info ("Total alignments processed: %d" % total_alignments)
 
 	logging.info("Number of alignmenets with <cell barcode> kept AS IS: %d" % CB_same)
-	logging.info("Number of alignmenets wiht <cell barcode> edited: %d" % CB_diff)
+	logging.info("Number of alignmenets with <cell barcode> edited: %d" % CB_diff)
 	logging.info("Number of alignmenets with <cell barcode> missing: %d" % CB_miss)
 	logging.info("Number of alignmenets with UMI kept AS IS: %d" % UMI_same)
-	logging.info("Number of alignmenets wiht UMI edited: %d" % UMI_diff)
+	logging.info("Number of alignmenets with UMI edited: %d" % UMI_diff)
 	logging.info("Number of alignmenets with UMI missing: %d" % UMI_miss)
 
 	# writing cell barcode
@@ -146,15 +145,6 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
 	CB_diff_mat = CB_diff_mat.sort_index(axis=1)
 	CB_diff_mat.index.name='Edits'
 	CB_diff_mat.to_csv(CB_mat_file, index=True, index_label="Index")
-	#print (CB_diff_mat)
-
-	#if CB_diff > 0:
-	#	CB_percent_file = outfile + '.CB_edits_percent.csv'
-	#	CB_heatmap_file = outfile + '.CB_edits_heatmap'
-	#	logging.info ("Writing the nucleotide editing matrix (percent) of cell barcode to \"%s\"" % CB_percent_file)
-	#	CB_diff_mat = CB_diff_mat/CB_diff
-	#	CB_diff_mat.to_csv(CB_percent_file, index=True, index_label="Index")
-	#	heatmap.make_heatmap(infile = CB_percent_file, outfile = CB_heatmap_file, filetype=filetype, cell_width=15, cell_height=10, col_angle=45, font_size=8, text_color='black', display_num = True)
 
 	UMI_mat_file = outfile + '.UMI_edits_count.csv'
 	logging.info ("Writing the nucleotide editing matrix of molecular barcode (UMI) to \"%s\"" % UMI_mat_file)
@@ -165,14 +155,6 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000):
 	UMI_diff_mat = UMI_diff_mat.sort_index(axis=1)
 	UMI_diff_mat.index.name='Edits'
 	UMI_diff_mat.to_csv(UMI_mat_file, index=True, index_label="Index")
-	#print (UMI_diff_mat)
-
-	#if UMI_diff > 0 :
-	#	UMI_percent_file = outfile + '.UMI_edits_percent.csv'
-	#	UMI_heatmap_file = outfile + '.UMI_edits_heatmap'
-	#	logging.info ("Writing the nucleotide editing matrix (percent) of molecular barcode to \"%s\"" % UMI_percent_file)
-	##	UMI_diff_mat.to_csv(UMI_percent_file, index=True, index_label="Index")
-	#	heatmap.make_heatmap(infile = UMI_percent_file, outfile = UMI_heatmap_file, filetype=filetype, cell_width=15, cell_height=10, col_angle=45, font_size=8, text_color='black', display_num = True)
 
 
 

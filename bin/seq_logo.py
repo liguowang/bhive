@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This program generates a DNA sequence logo from fasta or fastq format file.
-It is useful to visualize the nucleotide compositions of sample barcode,
+It is useful to visualize the nucleotide compositions of sample barcodes,
 cell barcodes and molecular barcodes.
 """
 
@@ -26,16 +26,16 @@ def main():
 	usage= __doc__
 	parser = OptionParser(usage,version="%prog " + __version__)
 	parser.add_option("-i","--infile",action="store",type="string", dest="in_file",
-help="Input DNA sequence file in FASTQ (https://en.wikipedia.org/wiki/FASTQ_format#)\
-or FASTA (https://en.wikipedia.org/wiki/FASTA_format) format. All sequences must be\
-the same length. This file can be plain text or compressed format (\".gz\", \".Z\",\
+help="Input DNA sequence file in FASTQ (https://en.wikipedia.org/wiki/FASTQ_format#),\
+FASTA (https://en.wikipedia.org/wiki/FASTA_format) or pure sequence format. All sequences must be\
+ the same length. This file can be plain text or compressed format (\".gz\", \".Z\",\
 \".z\",\".bz\", \".bz2\", \".bzip2\").")
 	parser.add_option("-o","--outfile",action="store",type="string", dest="out_file",
 help="The prefix of output files.")
 	parser.add_option("--iformat",action="store",type="string", dest="in_format",default='fq',
-help="The format of input file. Must be 'fq' or 'fa'. defualt=\'%default\'")
+help="The format of input file. Must be 'fq' or 'fa'. default=\'%default\'")
 	parser.add_option("--oformat",action="store",type="string", dest="out_format",default='pdf',
-help="The format of output logo file. Must be 'pdf', 'png' or 'svg'. defualt=\'%default\'")
+help="The format of output logo file. Must be 'pdf', 'png' or 'svg'. default=\'%default\'")
 	parser.add_option("-n","--nseq-limit",action="store",type="int", dest="max_seq",default=None,
 help="Only process this many sequences and stop. default=%default (generate logo from\
 ALL sequences).")

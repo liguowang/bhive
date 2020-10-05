@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. BC_edit_matrix.py &mdash; bhive documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. seq_logo.py" href="seq_logo.html" />
+    <link rel="prev" title="1. Testing dataset" href="../dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> bhive
+          
+
+          
+            
+            <img src="../_static/bhive_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Change log</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../change_log.html">1. bhive Release history</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Test Dataset</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dataset.html">1. Testing dataset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Usage Information</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. BC_edit_matrix.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">1.1. Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options">1.2. Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-file-format">1.3. Input file format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-visualize-sample-barcode">1.4. Example (Visualize sample barcode)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#out-put-files">1.5. out put files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="seq_logo.html">2. seq_logo.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq_qual.html">3. seq_qual.py</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Liscense</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../liscense.html">LICENSE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bhive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>BC_edit_matrix.py</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/demo/BC_edit_matrix.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bc-edit-matrix-py">
+<h1><span class="section-number">1. </span>BC_edit_matrix.py<a class="headerlink" href="#bc-edit-matrix-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2><span class="section-number">1.1. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This program generates heatmaps to visualize the <strong>positions</strong> (X-axis),
+type of edits (Y-axis, such as “C” to “T”) and  <strong>frequencies</strong> (color)
+of error-corrected nucleotides in cell barcodes and UMIs.</p>
+</div>
+<div class="section" id="options">
+<h2><span class="section-number">1.2. </span>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="option-list">
+<dt><kbd><span class="option">--version</span></kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-i <var>IN_FILE</var></span>, <span class="option">--infile=<var>IN_FILE</var></span></kbd></dt>
+<dd><p>Input file in BAM foramt.</p>
+</dd>
+<dt><kbd><span class="option">-o <var>OUT_FILE</var></span>, <span class="option">--outfile=<var>OUT_FILE</var></span></kbd></dt>
+<dd><p>The prefix of output files.</p>
+</dd>
+<dt><kbd><span class="option">--limit=<var>READS_NUM</var></span></kbd></dt>
+<dd><p>Number of alignments to process. default=none</p>
+</dd>
+<dt><kbd><span class="option">--cr-tag=<var>CR_TAG</var></span></kbd></dt>
+<dd><p>Tag of cellular barcode reported by the sequencer in
+BAM file. default=’CR’</p>
+</dd>
+<dt><kbd><span class="option">--cb-tag=<var>CB_TAG</var></span></kbd></dt>
+<dd><p>Tag of error-corrected cellular barcode in BAM file.
+default=’CB’</p>
+</dd>
+<dt><kbd><span class="option">--ur-tag=<var>UR_TAG</var></span></kbd></dt>
+<dd><p>Tag of UMI reported by the sequencer in BAM file.
+default=’UR’</p>
+</dd>
+<dt><kbd><span class="option">--ub-tag=<var>UB_TAG</var></span></kbd></dt>
+<dd><p>Tag of error-corrected UMI in BAM file. default=’UB’</p>
+</dd>
+<dt><kbd><span class="option">--cell-width=<var>CELL_WIDTH</var></span></kbd></dt>
+<dd><p>Points of cell width in the heatmap. default=15</p>
+</dd>
+<dt><kbd><span class="option">--cell-height=<var>CELL_HEIGHT</var></span></kbd></dt>
+<dd><p>Points of cell height in the heatmap. default=10</p>
+</dd>
+<dt><kbd><span class="option">--font-size=<var>FONT_SIZE</var></span></kbd></dt>
+<dd><p>Font size. If –display-num was set, fontsize_number =
+0.8 * font_size. default=8</p>
+</dd>
+<dt><kbd><span class="option">--angle=<var>COL_ANGLE</var></span></kbd></dt>
+<dd><p>The angle (must be 0, 45, 90, 270, 315) of column text
+lables under the heatmap. default=45</p>
+</dd>
+<dt><kbd><span class="option">--text-color=<var>TEXT_COLOR</var></span></kbd></dt>
+<dd><p>The color of numbers in each cell. default=black</p>
+</dd>
+<dt><kbd><span class="option">--file-type=<var>FILE_TYPE</var></span></kbd></dt>
+<dd><p>The file type of heatmap. Choose one of ‘pdf’, ‘png’,
+‘tiff’, ‘bmp’, ‘jpeg’. default=pdf</p>
+</dd>
+<dt><kbd><span class="option">--verbose</span></kbd></dt>
+<dd><p>If set, detailed running information is printed to
+screen.</p>
+</dd>
+<dt><kbd><span class="option">--no-num</span></kbd></dt>
+<dd><p>If set, will not print numerical values to cells.
+default=False</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="input-file-format">
+<h2><span class="section-number">1.3. </span>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<p>BAM file with the following tags:</p>
+<ul class="simple">
+<li><p>CB : cellular barcode sequence that is error-corrected</p></li>
+<li><p>CR : cellular barcode sequence as reported by the sequencer.</p></li>
+<li><p>UB : molecular barcode sequence that is error-corrected</p></li>
+<li><p>UR : molecular barcode sequence as reported by the sequencer.</p></li>
+</ul>
+</div>
+<div class="section" id="example-visualize-sample-barcode">
+<h2><span class="section-number">1.4. </span>Example (Visualize sample barcode)<a class="headerlink" href="#example-visualize-sample-barcode" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 BC_edit_matrix.py -i normal_possorted_genome_bam.bam --limit 5000000 -o output
+
+2020-09-30 08:59:21 [INFO]  Reading BAM file &quot;normal_possorted_genome_bam.bam&quot; ...
+2020-09-30 09:00:03 [INFO]  Total alignments processed: 5000000
+2020-09-30 09:00:03 [INFO]  Number of alignmenets with &lt;cell barcode&gt; kept AS IS: 4876615
+2020-09-30 09:00:03 [INFO]  Number of alignmenets wiht &lt;cell barcode&gt; edited: 47377
+2020-09-30 09:00:03 [INFO]  Number of alignmenets with &lt;cell barcode&gt; missing: 76008
+2020-09-30 09:00:03 [INFO]  Number of alignmenets with UMI kept AS IS: 4973597
+2020-09-30 09:00:03 [INFO]  Number of alignmenets wiht UMI edited: 24842
+2020-09-30 09:00:03 [INFO]  Number of alignmenets with UMI missing: 1561
+2020-09-30 09:00:03 [INFO]  Writing cell barcode frequencies to &quot;output.CB_freq.tsv&quot;
+2020-09-30 09:00:03 [INFO]  Writing UMI frequencies to &quot;output.UMI_freq.tsv&quot;
+2020-09-30 09:00:04 [INFO]  Writing the nucleotide editing matrix (count) of cell barcode to &quot;output.CB_edits_count.csv&quot;
+2020-09-30 09:00:04 [INFO]  Writing the nucleotide editing matrix of molecular barcode (UMI) to &quot;output.UMI_edits_count.csv&quot;
+2020-09-30 09:00:04 [INFO]  Writing R code to &quot;output.CB_edits_heatmap.r&quot;
+2020-09-30 09:00:04 [INFO]  Displayed numerical values on heatmap
+2020-09-30 09:00:04 [INFO]  Numbers will be displayed on log2 scale
+2020-09-30 09:00:04 [INFO]  Running R script file &quot;output.CB_edits_heatmap.r&quot;
+Loading required package: Matrix
+Loading required package: SPAtest
+Loading required package: pheatmap
+2020-09-30 09:00:07 [INFO]  Writing R code to &quot;output.UMI_edits_heatmap.r&quot;
+2020-09-30 09:00:07 [INFO]  Displayed numerical values on heatmap
+2020-09-30 09:00:07 [INFO]  Numbers will be displayed on log2 scale
+2020-09-30 09:00:07 [INFO]  Running R script file &quot;output.UMI_edits_heatmap.r&quot;
+Loading required package: Matrix
+Loading required package: SPAtest
+Loading required package: pheatmap
+</pre></div>
+</div>
+</div>
+<div class="section" id="out-put-files">
+<h2><span class="section-number">1.5. </span>out put files<a class="headerlink" href="#out-put-files" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>output.CB_edits_count.csv : editing matrix of cellular barcodes in CSV format.</p></li>
+<li><p>output.CB_freq.tsv : corrected cell barcodes and their frequencies.</p></li>
+<li><p>output.CB_edits_heatmap.pdf : heatmap showing the positions, types and frequencies of nucleotides that have been corrected.</p></li>
+<li><p>output.CB_edits_heatmap.r : R script for the above heatmap.</p></li>
+<li></li>
+<li><p>output.UMI_edits_count.csv : editing matrix of UMIs in CSV format.</p></li>
+<li><p>output.UMI_freq.tsv : corrected UMIs and their frequencies.</p></li>
+<li><p>output.UMI_edits_heatmap.pdf :  heatmap showing the positions, types and frequencies of nucleotides that have been corrected.</p></li>
+<li><p>output.UMI_edits_heatmap.r : R script for the above heatmap.</p></li>
+</ul>
+<p>Three files were generated.</p>
+<ul class="simple">
+<li><p>I1.count_matrix.csv</p></li>
+<li><p>I1.logo.pdf</p></li>
+<li><p>I1logo.mean_centered.pdf</p></li>
+</ul>
+<p>output.CB_edits_heatmap.pdf</p>
+<a class="reference internal image-reference" href="../_images/CB_edits_heatmap.png"><img alt="../_images/CB_edits_heatmap.png" src="../_images/CB_edits_heatmap.png" style="width: 800.0px; height: 600.0px;" /></a>
+<p>output.UMI_edits_heatmap.pdf</p>
+<a class="reference internal image-reference" href="../_images/UMI_edits_heatmap.png"><img alt="../_images/UMI_edits_heatmap.png" src="../_images/UMI_edits_heatmap.png" style="width: 800.0px; height: 600.0px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seq_logo.html" class="btn btn-neutral float-right" title="2. seq_logo.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../dataset.html" class="btn btn-neutral float-left" title="1. Testing dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Liguo Wang et al
+      <span class="lastupdated">
+        Last updated on July 9, 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-XXXXXXX-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

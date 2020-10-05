@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-First, calculate the "read count" and "UMI count" for each cell barcode, and generate the barcode rank plot and density plot.
-Second, using Bayesian Gaussian Mixture Model (BGMM) to separate cells into "valid cells" and "background cells".
+First, calculates the "read count" and "UMI count" for each cell barcode, and generates the
+barcode rank plot and density plot. Then, using the Bayesian Gaussian Mixture Model (BGMM)
+to classify cell barcode into "valid" and "background" groups.
+
 """
 import sys
 import logging
@@ -29,7 +31,7 @@ def main():
 	parser.add_option("-o","--outfile",action="store",type="string", dest="out_file", help="The prefix of output files.")
 	parser.add_option("--cb-tag",action="store",type="string", dest="CB_tag", default='CB', help="Tag of error-corrected cellular barcode in BAM file. default=\'%default\'")
 	parser.add_option("--umi-tag",action="store",type="string", dest="UMI_tag", default='UB', help="Tag of error-corrected UMI in BAM file. default=\'%default\'")
-	parser.add_option("--cb-num",action="store",type="int", dest="CB_limit", default=100000, help="Top cell barcodes (ranked by associated UMI frequency) analysed. default=%default")
+	parser.add_option("--cb-num",action="store",type="int", dest="CB_limit", default=100000, help="Maximum cell barcodes (ranked by associated UMI frequency) analysed. default=%default")
 	parser.add_option("--min-read-count",action="store",type="int", dest="min_reads",default=200, help="The minimum number of reads to filter out cell barcode. default=%default")
 	parser.add_option("-r","--report",action="store_true",dest="report_summary",default=False, help="If set, generates report file for mixture models.  default=%default")
 	parser.add_option("-s","--seed",action="store",type='int', dest="random_state",default=0, help="The seed used by the random number generator. default=%default")
@@ -44,7 +46,7 @@ def main():
 		logging.basicConfig(format = "%(asctime)s [%(levelname)s]  %(message)s",datefmt='%Y-%m-%d %I:%M:%S', level=logging.INFO)
 
 
-	"""
+
 	if not (options.in_file):
 		parser.print_help()
 		sys.exit(0)
@@ -56,7 +58,7 @@ def main():
 		parser.print_help()
 		sys.exit(0)
 	scbam.CBC_UMIcount(infile = options.in_file,  outfile = options.out_file, CB_tag = options.CB_tag, UMI_tag = options.UMI_tag, CB_num = options.CB_limit, read_num = options.min_reads)
-	"""
+
 
 
 	#outfile + ".Read_UMI_freq.tsv"

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Pre-compiled datasets &mdash; bhive documentation</title>
+  <title>1. Testing dataset &mdash; bhive documentation</title>
   
 
   
@@ -25,7 +25,6 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -37,8 +36,8 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. CpG_aggregation.py" href="demo/CpG_aggregation.html" />
-    <link rel="prev" title="1. Input file and data format" href="input_format.html" /> 
+    <link rel="next" title="1. BC_edit_matrix.py" href="demo/BC_edit_matrix.html" />
+    <link rel="prev" title="1. bhive Release history" href="change_log.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -57,7 +56,7 @@
 
           
             
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
+            <img src="_static/bhive_logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -65,7 +64,7 @@
             
             
               <div class="version">
-                1.0
+                1.0.0
               </div>
             
           
@@ -101,47 +100,22 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="change_log.html">1. bhive Release history</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Data Format</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="input_format.html">1. Input file and data format</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Test and Demo Datasets</span></p>
+<p class="caption"><span class="caption-text">Test Dataset</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Pre-compiled datasets</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#test-datasets">1.1. Test datasets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reference-gene-models">1.2. Reference gene models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#annotation-datasets">1.3. Annotation datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Testing dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-raw-data">1.1. Download raw data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#convert-bam-to-fastq">1.2. Convert BAM to FASTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-cellranger-count-workflow">1.3. Run CellRanger <em>count</em> workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-cellranger-aggr-workflow">1.4. Run CellRanger <em>aggr</em> workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">1.5. References</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Usage Information</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_aggregation.html">1. CpG_aggregation.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_anno_position.html">2. CpG_anno_position.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_anno_probe.html">3. CpG_anno_probe.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_density_gene_centered.html">4. CpG_density_gene_centered.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_distrb_chrom.html">5. CpG_distrb_chrom.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_distrb_gene_centered.html">6. CpG_distrb_gene_centered.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_distrb_region.html">7. CpG_distrb_region.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_logo.html">8. CpG_logo.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/CpG_to_gene.html">9. CpG_to_gene.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_PCA.html">10. beta_PCA.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_jitter_plot.html">11. beta_jitter_plot.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_m_conversion.html">12. beta_m_conversion.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_profile_gene_centered.html">13. beta_profile_gene_centered.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_profile_region.html">14. beta_profile_region.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_stacked_barplot.html">15. beta_stacked_barplot.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_stats.html">16. beta_stats.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_tSNE.html">17. beta_tSNE.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_topN.html">18. beta_topN.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/beta_trichotmize.html">19. beta_trichotmize.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_Bayes.html">20. dmc_Bayes.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_bb.html">21. dmc_bb.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_fisher.html">22. dmc_fisher.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_glm.html">23. dmc_glm.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_logit.html">24. dmc_logit.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_nonparametric.html">25. dmc_nonparametric.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo/dmc_ttest.html">26. dmc_ttest.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/BC_edit_matrix.html">1. BC_edit_matrix.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/seq_logo.html">2. seq_logo.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo/seq_qual.html">3. seq_qual.py</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Liscense</span></p>
 <ul>
@@ -195,7 +169,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li><span class="section-number">1. </span>Pre-compiled datasets</li>
+      <li><span class="section-number">1. </span>Testing dataset</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -214,56 +188,170 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pre-compiled-datasets">
-<h1><span class="section-number">1. </span>Pre-compiled datasets<a class="headerlink" href="#pre-compiled-datasets" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="test-datasets">
-<h2><span class="section-number">1.1. </span>Test datasets<a class="headerlink" href="#test-datasets" title="Permalink to this headline">¶</a></h2>
-<p>Test dataset can be downloaded from <a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/test/">this link</a></p>
+  <div class="section" id="testing-dataset">
+<h1><span class="section-number">1. </span>Testing dataset<a class="headerlink" href="#testing-dataset" title="Permalink to this headline">¶</a></h1>
+<p>We use the same example dataset as used by <a class="reference external" href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/tutorials/gex-analysis-nature-publication">10X Genomics</a>.
+Raw data (in BAM format) were downloaded from the NCBI Sequence Read Archive (SRA). The study was published in <a class="footnote-reference brackets" href="#id3" id="id1">1</a>.</p>
+<div class="section" id="download-raw-data">
+<h2><span class="section-number">1.1. </span>Download raw data<a class="headerlink" href="#download-raw-data" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 21%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>File_name</p></td>
+<td><p>GSM_accession</p></td>
+<td><p>SRR_accession</p></td>
+<td><p>File_size</p></td>
+<td><p>Treatment</p></td>
+<td><p>MD5</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://sra-pub-src-1.s3.amazonaws.com/SRR7611046/C05.bam.1">C05.bam.1</a></p></td>
+<td><p>GSM3308718</p></td>
+<td><p>SRR7611046</p></td>
+<td><p>70 Gb</p></td>
+<td><p>normal</p></td>
+<td><p>97b87c87b539e69dad7dcb04e8f03132</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://sra-pub-src-1.s3.amazonaws.com/SRR7611048/C07.bam.1">C07.bam.1</a></p></td>
+<td><p>GSM3308720</p></td>
+<td><p>SRR7611048</p></td>
+<td><p>64 Gb</p></td>
+<td><p>irradiated</p></td>
+<td><p>064669deb6be22e5f82fe58679f7e394</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section" id="reference-gene-models">
-<h2><span class="section-number">1.2. </span>Reference gene models<a class="headerlink" href="#reference-gene-models" title="Permalink to this headline">¶</a></h2>
-<p>Reference gene model files can be downloaded from <a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/refgene/">this link</a></p>
+<div class="section" id="convert-bam-to-fastq">
+<h2><span class="section-number">1.2. </span>Convert BAM to FASTQ<a class="headerlink" href="#convert-bam-to-fastq" title="Permalink to this headline">¶</a></h2>
+<p>Download <code class="docutils literal notranslate"><span class="pre">bamtofastq</span></code> from <a class="reference external" href="https://cf.10xgenomics.com/misc/bamtofastq-1.2.0">here</a>. Convert BAM into FASTQ files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ bamtofastq C05.bam.1 normal_dat
+$ bamtofastq C07.bam.1 irradiated_dat
+</pre></div>
 </div>
-<div class="section" id="annotation-datasets">
-<h2><span class="section-number">1.3. </span>Annotation datasets<a class="headerlink" href="#annotation-datasets" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><ul class="simple">
-<li><p>pre-built TSV file used to annotate CpG according to its 450K/850K probe ID.</p></li>
-</ul>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/MethylationEPIC_CpGtools.tsv.gz/download">MethylationEPIC_CpGtools.tsv.gz</a></p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>BED files used to annotate CpG according to its genomic positions (hg19/GRCh37)</p></li>
-</ul>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_338TF_130Cell_E3.bed.gz/download">hg19_ENCODE_338TF_130Cell_E3.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_DNaseI_125Cells_V3.bed.gz/download">hg19_ENCODE_DNaseI_125Cells_V3.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_H3K27ac_11_cellLines_ChIP.bed.gz/download">hg19_ENCODE_H3K27ac_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_H3K4me1_11_cellLines_ChIP.bed.gz/download">hg19_ENCODE_H3K4me1_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_H3K4me3_11_cellLines_ChIP.bed.gz/download">hg19_ENCODE_H3K4me3_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_ENCODE_chromHMM_states_9Cells.merge.bed.gz/download">hg19_ENCODE_chromHMM_states_9Cells.merge.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg19_FANTOM_enhancers_phase_1_and_2.bed.gz/download">hg19_FANTOM_enhancers_phase_1_and_2.bed.gz</a></p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>BED files used to annotate CpG according to its genomic locations (hg38/GRCh38)</p></li>
-</ul>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_338TF_130Cell_E3.bed.gz/download">hg38_ENCODE_338TF_130Cell_E3.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_DNaseI_125Cells_V3.bed.gz/download">hg38_ENCODE_DNaseI_125Cells_V3.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_H3K27ac_11_cellLines_ChIP.bed.gz/download">hg38_ENCODE_H3K27ac_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_H3K4me1_11_cellLines_ChIP.bed.gz/download">hg38_ENCODE_H3K4me1_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_H3K4me3_11_cellLines_ChIP.bed.gz/download">hg38_ENCODE_H3K4me3_11_cellLines_ChIP.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_ENCODE_chromHMM_states_9Cells.merge.bed.gz/download">hg38_ENCODE_chromHMM_states_9Cells.merge.bed.gz</a></p></li>
-<li><p><a class="reference external" href="https://sourceforge.net/projects/cpgtools/files/data/hg38_FANTOM_enhancers_phase_1_and_2.bed.gz/download">hg38_FANTOM_enhancers_phase_1_and_2.bed.gz</a></p></li>
-</ul>
-</div></blockquote>
-</div></blockquote>
+<p>After this step, you will get two subdirectories (<code class="docutils literal notranslate"><span class="pre">./normal_dat</span></code> and <code class="docutils literal notranslate"><span class="pre">./irradiated_dat</span></code>) under your current directory. And within <code class="docutils literal notranslate"><span class="pre">./normal_dat</span></code> and <code class="docutils literal notranslate"><span class="pre">./irradiated_dat</span></code>, there are
+subdirectories and fastq files, for example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ./normal_dat
+$ tree
+.
+├── indepth_C05_MissingLibrary_1_HL5G3BBXX
+│   ├── bamtofastq_S1_L003_I1_001.fastq.gz
+│   ├── bamtofastq_S1_L003_I1_002.fastq.gz
+│   ├── bamtofastq_S1_L003_R1_001.fastq.gz
+│   ├── bamtofastq_S1_L003_R1_002.fastq.gz
+│   ├── bamtofastq_S1_L003_R2_001.fastq.gz
+│   ├── bamtofastq_S1_L003_R2_002.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_001.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_002.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_003.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_004.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_005.fastq.gz
+│   ├── bamtofastq_S1_L004_I1_006.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_001.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_002.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_003.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_004.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_005.fastq.gz
+│   ├── bamtofastq_S1_L004_R1_006.fastq.gz
+│   ├── bamtofastq_S1_L004_R2_001.fastq.gz
+│   ├── bamtofastq_S1_L004_R2_002.fastq.gz
+│   ├── bamtofastq_S1_L004_R2_003.fastq.gz
+│   ├── bamtofastq_S1_L004_R2_004.fastq.gz
+│   ├── bamtofastq_S1_L004_R2_005.fastq.gz
+│   └── bamtofastq_S1_L004_R2_006.fastq.gz
+└── indepth_C05_MissingLibrary_1_HNNWNBBXX
+    ├── bamtofastq_S1_L002_I1_001.fastq.gz
+    ├── bamtofastq_S1_L002_I1_002.fastq.gz
+    ├── bamtofastq_S1_L002_I1_003.fastq.gz
+    ├── bamtofastq_S1_L002_I1_004.fastq.gz
+    ├── bamtofastq_S1_L002_I1_005.fastq.gz
+    ├── bamtofastq_S1_L002_R1_001.fastq.gz
+    ├── bamtofastq_S1_L002_R1_002.fastq.gz
+    ├── bamtofastq_S1_L002_R1_003.fastq.gz
+    ├── bamtofastq_S1_L002_R1_004.fastq.gz
+    ├── bamtofastq_S1_L002_R1_005.fastq.gz
+    ├── bamtofastq_S1_L002_R2_001.fastq.gz
+    ├── bamtofastq_S1_L002_R2_002.fastq.gz
+    ├── bamtofastq_S1_L002_R2_003.fastq.gz
+    ├── bamtofastq_S1_L002_R2_004.fastq.gz
+    ├── bamtofastq_S1_L002_R2_005.fastq.gz
+    ├── bamtofastq_S1_L003_I1_001.fastq.gz
+    ├── bamtofastq_S1_L003_I1_002.fastq.gz
+    ├── bamtofastq_S1_L003_R1_001.fastq.gz
+    ├── bamtofastq_S1_L003_R1_002.fastq.gz
+    ├── bamtofastq_S1_L003_R2_001.fastq.gz
+    └── bamtofastq_S1_L003_R2_002.fastq.gz
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-cellranger-count-workflow">
+<h2><span class="section-number">1.3. </span>Run CellRanger <em>count</em> workflow<a class="headerlink" href="#run-cellranger-count-workflow" title="Permalink to this headline">¶</a></h2>
+<p>Download <code class="docutils literal notranslate"><span class="pre">cellranger</span></code> and <strong>Mouse reference dataset</strong> from <a class="reference external" href="https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest">here</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cellranger --version
+cellranger 4.0.0
+
+# run cellranger for normal sample
+$ cd ./normal_dat
+$ cellranger count  --id=normal        --transcriptome=/XYZ/CellRanger/refdata-gex-mm10-2020-A  --fastqs=./indepth_C05_MissingLibrary_1_HL5G3BBXX,./indepth_C05_MissingLibrary_1_HNNWNBBXX
+
+# run cellranger for irradiated sample
+$ cd ./irradiated_dat
+$ cellranger count  --id=irradiated    --transcriptome=/XYZ/CellRanger/refdata-gex-mm10-2020-A  --fastqs=./indepth_C07_MissingLibrary_1_HL5G3BBXX,./indepth_C07_MissingLibrary_1_HNNWNBBXX
+</pre></div>
+</div>
+<p>After each <code class="docutils literal notranslate"><span class="pre">cellranger</span> <span class="pre">count</span></code> workflow is finished successfully. Subdirectories <code class="docutils literal notranslate"><span class="pre">normal</span></code> and <code class="docutils literal notranslate"><span class="pre">irradiated</span></code> will be created, which contain the cellranger outputs. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd normal
+$ ls -F
+_cmdline     _invocation  _mrosource     _perf               _tags       _vdrkill
+_filelist    _jobmode    normal.mri.tgz  SC_RNA_COUNTER_CS/  _timestamp  _versions
+_finalstate  _log        outs/           _sitecheck          _uuid
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace /XYZ/ with the actual path on your system.</p>
+</div>
+</div>
+<div class="section" id="run-cellranger-aggr-workflow">
+<h2><span class="section-number">1.4. </span>Run CellRanger <em>aggr</em> workflow<a class="headerlink" href="#run-cellranger-aggr-workflow" title="Permalink to this headline">¶</a></h2>
+<p>First, make the <code class="docutils literal notranslate"><span class="pre">library.csv</span></code> file. This CSV file has two columns which define the <strong>ID</strong> and the location of the <strong>molecule_info.h5</strong> file from each run.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat  library.csv
+
+library_id,molecule_h5
+normal,/ABC/normal_dat/normal/outs/molecule_info.h5
+irradiated,/ABC/irradiated_dat/irradiated/outs/molecule_info.h5
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace /ABC/ with the actual path on your system.</p>
+</div>
+<p>Then, run <code class="docutils literal notranslate"><span class="pre">cellranger</span> <span class="pre">aggr</span></code> workflow. The <code class="docutils literal notranslate"><span class="pre">cellranger</span> <span class="pre">aggr</span></code> workflow aggregates outputs from multiple runs of the <code class="docutils literal notranslate"><span class="pre">cellranger</span> <span class="pre">count</span></code> workflow</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cellranger aggr --id=aggr --csv=libraries.csv
+</pre></div>
+</div>
+<p>After each <code class="docutils literal notranslate"><span class="pre">cellranger</span> <span class="pre">aggr</span></code> workflow is finished successfully. A subdirectory <code class="docutils literal notranslate"><span class="pre">aggr</span></code> will be created, which contain the cellranger outputs. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd aggr
+$ ls -F
+aggr.mri.tgz  _finalstate  _log        _perf                 _tags       _vdrkill
+_cmdline      _invocation  _mrosource  SC_RNA_AGGREGATOR_CS/  _timestamp  _versions
+_filelist     _jobmode    outs/       _sitecheck             _uuid
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<h2><span class="section-number">1.5. </span>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Ayyaz A, Kumar S, Sangiorgi B, Ghoshal B, Gosio J, Ouladan S, Fink M, Barutcu S, Trcka D, Shen J, Chan K, Wrana JL, Gregorieff A. Single-cell transcriptomes of the regenerating intestine reveal a revival stem cell. Nature. 2019 May;569(7754):121-125. doi: 10.1038/s41586-019-1154-y. Epub 2019 Apr 24. PMID: 31019301.</p>
+</dd>
+</dl>
 </div>
 </div>
 
@@ -275,10 +363,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="demo/CpG_aggregation.html" class="btn btn-neutral float-right" title="1. CpG_aggregation.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="demo/BC_edit_matrix.html" class="btn btn-neutral float-right" title="1. BC_edit_matrix.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="input_format.html" class="btn btn-neutral float-left" title="1. Input file and data format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="change_log.html" class="btn btn-neutral float-left" title="1. bhive Release history" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -287,7 +375,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Liguo Wang
+        &copy; Copyright 2020, Liguo Wang et al
+      <span class="lastupdated">
+        Last updated on July 9, 2020.
+      </span>
 
     </p>
   </div>
