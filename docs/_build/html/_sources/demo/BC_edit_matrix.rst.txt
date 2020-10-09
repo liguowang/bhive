@@ -4,8 +4,8 @@ BC_edit_matrix.py
 Description
 -------------
 This program generates heatmaps to visualize the **positions** (X-axis),
-type of edits (Y-axis, such as "C" to "T") and  **frequencies** (color) 
-of error-corrected nucleotides in cell barcodes and UMIs.
+type of edits/corrections (Y-axis, such as "C" to "T") and  **frequencies**
+(color) of error-corrected nucleotides in cell barcodes and UMIs.
 
 Options
 -------
@@ -109,14 +109,14 @@ output.CB_edits_heatmap.pdf
 
 .. image:: ../_static/CB_edits_heatmap.png
    :height: 600 px
-   :width: 800 px
+   :width: 900 px
    :scale: 100 %  
 
 output.UMI_edits_heatmap.pdf
 
 .. image:: ../_static/UMI_edits_heatmap.png
    :height: 600 px
-   :width: 800 px
+   :width: 900 px
    :scale: 100 %  
 
 

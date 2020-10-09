@@ -10,6 +10,7 @@ import collections
 import logging
 import re
 import pandas as pd
+import subprocess
 
 def diff_str(s1, s2):
 	'''
@@ -33,7 +34,36 @@ def diff_str(s1, s2):
 		results.append([pos, s1[pos], s2[pos]])
 	return results
 
-def barcode_stat(infile, outfile, step_size=10000, limit=2000000, CR_tag = 'CR', CB_tag = 'CB', UR_tag = 'UR', UB_tag = 'UB'):
+def read_match_type(cigar_str):
+	'''return the matching type between read and ref'''
+	match_type = ''
+	if bool(re.search(r'\A\d+M\Z', cigar_str)):
+		match_type ='Map_consecutively'
+	elif bool(re.search(r'\A\d+M\d+N\d+M\Z', cigar_str)):
+		match_type = 'Map_with_splicing'
+	elif bool(re.search(r'\A\d+S\d+M\Z', cigar_str)):
+		match_type = 'Map_with_clipping'
+	elif bool(re.search(r'\A\d+M\d+S\Z', cigar_str)):
+		match_type = 'Map_with_clipping'
+	elif bool(re.search(r'\A\d+M\d+N\d+M\d+S\Z', cigar_str)):
+		match_type = 'Map_with_splicing_and_clipping'
+	elif bool(re.search(r'\A\d+S\d+M\d+N\d+M\Z', cigar_str)):
+		match_type = 'Map_with_splicing_and_clipping'
+	else:
+		match_type = 'Others'
+	return match_type
+
+def list2str (lst):
+	'''
+	translate samtools returned cigar_list into cigar_string
+	'''
+	code2Char={'0':'M','1':'I','2':'D','3':'N','4':'S','5':'H','6':'P','7':'=','8':'X'}
+	cigar_str=''
+	for i in lst:
+		cigar_str += str(i[1]) + code2Char[str(i[0])]
+	return cigar_str
+
+def barcode_edits(infile, outfile, step_size=10000, limit=2000000, CR_tag = 'CR', CB_tag = 'CB', UR_tag = 'UR', UB_tag = 'UB'):
 	'''
 	Analzye barcode in BAM file.
 
@@ -158,136 +188,10 @@ def barcode_stat(infile, outfile, step_size=10000, limit=2000000, CR_tag = 'CR',
 
 
 
-def reads_stat(infile, step_size=10000, limit=1000000):
+def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag = 'RE', TX_tag = 'TX', AN_tag = 'AN', xf_tag = 'xf'):
 	'''
 	Reads mapping statistics
 
-	Parameters
-	----------
-	infile : str
-		Input BAM file. Must be sorted and indexed.
-	outfile : str
-		Prefix of output files.
-	step_size: int
-		Output progress report when step_size alignments have been processed.
-	limit : int
-		Only process this number of alignments and stop.
-	'''
-	logging.info("Reading BAM file \"%s\" ..." % infile)
-	samfile = pysam.AlignmentFile(infile,'rb')
-
-	#exon_count + intron_count + intergenic_count == total
-	unknown_count = 0 #reads with unknown mapping information
-	exon_count = 0
-	exon_count_tx = 0 # read aligned to same strand as the transcripts
-	exon_count_an = 0 #read aligned to antisense strand of the transcripts
-	exon_count_other = 0 #reads aligned to other (e.g., exon-intron boundaries)
-	intron_count = 0
-	intergenic_count = 0
-
-
-	confid_mapped = 0 #read confidently mapped to feature
-	UMI_read = 0 #This read is representative for the molecule and can be treated as a UMI count
-	alien_read = 0 # The read maps to a feature that the majority of other reads with this UMI did not
-	targeted_UM_fil = 0 #This read was removed by targeted UMI filtering.
-
-	total_alignments = 0
-	unique_reads = collections.defaultdict(int)
-	try:
-		while(1):
-			total_alignments += 1
-			aligned_read = next(samfile)
-			unique_reads[aligned_read.query_name] += 1
-			tag_dict = dict(aligned_read.tags) #{'NM': 1, 'RG': 'L1'}
-			if 'xf' in tag_dict:
-				flag_value = tag_dict['xf']
-				if flag_value & 0x1 != 0:
-					confid_mapped += 1
-				if flag_value & 0x2 != 0:
-					alien_read += 1
-				if flag_value & 0x8 != 0:
-					UMI_read += 1
-				if flag_value & 0x20 != 0:
-					targeted_UM_fil += 1
-
-			if 'RE' in tag_dict:
-				if tag_dict['RE'] == "E":
-					exon_count += 1
-					if 'TX' in tag_dict:
-						exon_count_tx += 1
-					elif 'AN' in tag_dict:
-						exon_count_an += 1
-					else:
-						exon_count_other += 1
-				elif tag_dict['RE'] == "I":
-					intron_count += 1
-				elif tag_dict['RE'] == "N":
-					intergenic_count += 1
-			else:
-				unknown_count += 1
-				continue
-			if total_alignments % step_size == 0:
-				print("%d alignments processed.\r" % total_alignments, end=' ', file=sys.stderr)
-
-			if limit is not None:
-				if total_alignments >= limit:
-					break
-	except StopIteration:
-		pass
-	logging.info ("\nTotal alignments processed: %d" % total_alignments)
-
-	total_reads = len(unique_reads)
-	print ("\nGenomic distribution of mapped reads:")
-	print ("Total_reads:\t%d\t(100%%)" % total_reads)
-	print ("  *Exonic_reads:\t%d\t(%.2f%%)" % (exon_count, exon_count*100.0/total_reads))
-	print ("    #Exonic_transcript:\t%d\t(%.2f%%)" % (exon_count_tx,exon_count_tx*100.0/total_reads))
-	print ("    #Exonic_antisense:\t%d\t(%.2f%%)" % (exon_count_an, exon_count_an*100.0/total_reads))
-	print ("    #Exonic_other:\t%d\t(%.2f%%)" % (exon_count_other, exon_count_other*100.0/total_reads))
-	print ("  *Intronic_reads:\t%d\t(%.2f%%)" % (intron_count,intron_count*100.0/ total_reads))
-	print ("  *Intergenic_reads:\t%d\t(%.2f%%)" % (intergenic_count, intergenic_count*100.0/total_reads))
-	print ("  *Unknown_reads:\t%d\t(%.2f%%)" % (unknown_count, unknown_count*100.0/total_reads))
-	print ('\n')
-
-	print ("Other statistics:")
-	print ("  *Confidently_mapped_reads:\t%d\t(%.2f%%)" % (confid_mapped, confid_mapped*100.0/total_reads))
-	print ("  *UMI counting_eligible_reads:\t%d\t(%.2f%%)" % (UMI_read, UMI_read*100.0/total_reads))
-	print ("  *Alien_reads:\t%d\t(%.2f%%)" % (alien_read, alien_read*100.0/total_reads))
-	print ("  *Targeted_UMI_filtered_reads:\t%d\t(%.2f%%)" % (targeted_UM_fil, targeted_UM_fil*100.0/total_reads))
-
-
-def read_match_type(cigar_str):
-	'''return the matching type between read and ref'''
-	match_type = ''
-	if bool(re.search(r'\A\d+M\Z', cigar_str)):
-		match_type ='Map_consecutively'
-	elif bool(re.search(r'\A\d+M\d+N\d+M\Z', cigar_str)):
-		match_type = 'Map_with_splicing'
-	elif bool(re.search(r'\A\d+S\d+M\Z', cigar_str)):
-		match_type = 'Map_with_clipping'
-	elif bool(re.search(r'\A\d+M\d+S\Z', cigar_str)):
-		match_type = 'Map_with_clipping'
-	elif bool(re.search(r'\A\d+M\d+N\d+M\d+S\Z', cigar_str)):
-		match_type = 'Map_with_splicing_and_clipping'
-	elif bool(re.search(r'\A\d+S\d+M\d+N\d+M\Z', cigar_str)):
-		match_type = 'Map_with_splicing_and_clipping'
-	else:
-		match_type = 'Others'
-	return match_type
-
-def list2str (lst):
-	'''
-	translate samtools returned cigar_list into cigar_string
-	'''
-	code2Char={'0':'M','1':'I','2':'D','3':'N','4':'S','5':'H','6':'P','7':'=','8':'X'}
-	cigar_str=''
-	for i in lst:
-		cigar_str += str(i[1]) + code2Char[str(i[0])]
-	return cigar_str
-
-def mapping_stat(infile, outfile, step_size=10000, limit=1000000):
-	'''
-	1) mapping statistics
-	2) split reads into confidently mapped and non-confidently mapped, and save into seprate BAM files.
 	Parameters
 	----------
 	infile : str
@@ -301,20 +205,13 @@ def mapping_stat(infile, outfile, step_size=10000, limit=1000000):
 	'''
 	logging.info("Reading BAM file \"%s\" ..." % infile)
 	samfile = pysam.AlignmentFile(infile,'rb')
+	chrom_info = zip(samfile.references, samfile.lengths) #[('chr1', 195471971), ('chr10', 130694993),...]
 
-
-	if outfile is not None:
-		logging.info("Counting reads and generating BAM files ...")
-		logging.info("  Saving reads confidently mapped to transcriptome to \"%s\" ..." % (outfile + '.confident_alignments.bam'))
-		OUTC = pysam.Samfile((outfile + '.confident_alignments.bam'),'wb',template=samfile)
-		logging.info("  Saving reads not confidently mapped to transcriptome to \"%s\" ..." % (outfile + '.non_confident_alignments.bam'))
-		OUTN = pysam.Samfile((outfile + '.non_confident_alignments.bam'),'wb',template=samfile)
-	else:
-		logging.info("Counting reads without generating BAM files ...")
 	total_alignments = 0
 	confi_alignments = 0
-	total_reads = collections.defaultdict(int) #total reads in BAM file
-	confi_reads = collections.defaultdict(int) #reads marked as confidently mapped to transcriptome by xf:i:1 tag
+
+	total_reads_n = 0
+	confi_reads_n = 0
 
 	#PCR duplicate or not
 	confi_reads_dup = 0
@@ -324,83 +221,146 @@ def mapping_stat(infile, outfile, step_size=10000, limit=1000000):
 	confi_reads_rev = 0
 	confi_reads_fwd = 0
 
-	# with error-corrected CB
+	# with error-corrected CB or UMI
 	confi_CB = 0
-
-	# with error-corrected UMI
 	confi_UB = 0
+
+	exon_reads = 0
+	intron_reads = 0
+	intergenic_reads = 0
+	other_reads1 = 0
+
+	#sense or antisense
+	sense_reads = 0
+	anti_reads = 0
+	other_reads2 =0
 
 	#read match type
 	read_type = collections.defaultdict(int)
-	try:
-		while(1):
-			aligned_read = next(samfile)
+
+
+	for chr_id, chr_len in chrom_info:
+		logging.info("Processing \"%s\" ..." % chr_id)
+		chrom_count = 0
+		chrom_total_reads = set() #total reads in BAM file
+		chrom_confi_reads = set() #reads marked as confidently mapped to transcriptome by xf:i:1 tag
+
+		ALL = open(chr_id + '.all_reads_id.txt','w')
+		CONF = open(chr_id + '.confident_reads_id.txt','w')
+		for aligned_read in samfile.fetch(chr_id):
+			total_alignments += 1
+			chrom_count += 1
 			read_id = aligned_read.query_name
 			tag_dict = dict(aligned_read.tags) #{'NM': 1, 'RG': 'L1'}
 			cigar_str = list2str( aligned_read.cigar)
-			total_reads[read_id] +=1
+			chrom_total_reads.add(read_id)
 
 			#confident alignments
-			if 'xf' in tag_dict and tag_dict['xf']& 0x1 != 0:
+			if xf_tag in tag_dict and tag_dict[xf_tag]& 0x1 != 0:
+
+				#with or without CB/UMI barcode
+				if CB_tag in tag_dict:
+					confi_CB += 1
+				if UMI_tag in tag_dict:
+					confi_UB += 1
+
+				#duplicate or not
 				if aligned_read.is_duplicate:
 					confi_reads_dup += 1
 				else:
 					confi_reads_nondup += 1
+
+				#forward or reverse
 				if aligned_read.is_reverse:
 					confi_reads_rev += 1
 				else:
 					confi_reads_fwd += 1
 
-				if 'CB' in tag_dict:
-					confi_CB += 1
-				if 'UB' in tag_dict:
-					confi_UB += 1
+				#Single character indicating the region type of this alignment (E = exonic, N = intronic, I = intergenic).
+				if RE_tag in tag_dict:
+					if tag_dict[RE_tag] == "E":
+						exon_reads += 1
+				elif tag_dict[RE_tag] == "I":
+					intron_reads += 1
+				elif tag_dict[RE_tag] == "N":
+					intergenic_reads += 1
+				else:
+					other_reads1 += 1
 
+				#sense or antisense
+				if TX_tag in tag_dict:
+					sense_reads += 1
+				elif AN_tag in tag_dict:
+					anti_reads += 1
+				else:
+					other_reads2 += 1
+
+				#map type
 				cigar_str = list2str( aligned_read.cigar)
 				tmp = read_match_type(cigar_str)
 				read_type[tmp] += 1
+
 				confi_alignments += 1
-				confi_reads[read_id] += 1
-				if outfile is not None:
-					OUTC.write(aligned_read)
-			else:
-				if outfile is not None:
-					OUTN.write(aligned_read)
+				chrom_confi_reads.add(read_id)
 
+			if chrom_count % step_size == 0:
+				print("%d alignments processed.\r" % chrom_count, end=' ', file=sys.stderr)
+		logging.info("Processed %d alignments from \"%s\"" % (chrom_count, chr_id))
+		for i in chrom_total_reads:
+			print (i, file=ALL)
+		for i in chrom_confi_reads:
+			print (i, file=CONF)
+		ALL.close()
+		CONF.close()
 
-			total_alignments += 1
-			if total_alignments % step_size == 0:
-				print("%d alignments processed.\r" % total_alignments, end=' ', file=sys.stderr)
-			if limit is not None:
-				if total_alignments >= limit:
-					break
+	logging.info("Processing total %d alignments mapped to all chromosomes." % total_alignments)
 
-	except StopIteration:
-		pass
-	total_reads_n = len (total_reads)
-	confi_reads_n = len (confi_reads)
+	logging.info("Count total mapped reads ...")
+	output1 = subprocess.check_output("awk '!a[$0]++' *.all_reads_id.txt |tee All_reads_uniqID.txt | wc -l", shell=True)
+
+	logging.info("Count confidently mapped reads ...")
+	output2 = subprocess.check_output("awk '!a[$0]++' *.confident_reads_id.txt |tee confident_reads_uniqID.txt | wc -l", shell=True)
+
+	logging.info("Removing intermediate files ...")
+	subprocess.run("rm -rf *.all_reads_id.txt", shell=True)
+	subprocess.run("rm -rf *.confident_reads_id.txt", shell=True)
+
+	total_reads_n = int(output1.decode('utf-8').strip())
+	confi_reads_n = int(output2.decode('utf-8').strip())
 	non_confi_reads = total_reads_n - confi_reads_n
+
 	print ('')
 	print("\nTotal_alignments: %d" % total_alignments)
 	print ("└--Confident_alignments: %d" % confi_alignments)
 	print ('')
-	print ("Total_reads:\t%d" % total_reads_n)
+	print ("Total_mapped_reads:\t%d" % total_reads_n)
 	print ("|--Non_confidently_mapped_reads:\t%d\t(%.2f%%)" % (non_confi_reads, non_confi_reads*100.0/total_reads_n))
 	print ("└--Confidently_mapped_reads:\t%d\t(%.2f%%)" % (confi_reads_n, confi_reads_n*100.0/total_reads_n))
 
-	print ("   |--PCR duplicate reads:\t%d\t(%.2f%%)" % (confi_reads_dup, confi_reads_dup*100.0/confi_reads_n))
-	print ("   └--Non PCR duplicate reads:\t%d\t(%.2f%%)" % (confi_reads_nondup, confi_reads_nondup*100.0/confi_reads_n))
+	print ("   |--Reads_with_PCR_duplicates:\t%d\t(%.2f%%)" % (confi_reads_dup, confi_reads_dup*100.0/confi_reads_n))
+	print ("   └--Reads_no_PCR_duplicates:\t%d\t(%.2f%%)" % (confi_reads_nondup, confi_reads_nondup*100.0/confi_reads_n))
 	print ('')
 
-	print ("   |--Forward reads:\t%d\t(%.2f%%)" % (confi_reads_fwd, confi_reads_fwd*100.0/confi_reads_n))
-	print ("   └--Reverse reads:\t%d\t(%.2f%%)" % (confi_reads_rev, confi_reads_rev*100.0/confi_reads_n))
+	print ("   |--Reads_map_to_forward(Waston)_strand:\t%d\t(%.2f%%)" % (confi_reads_fwd, confi_reads_fwd*100.0/confi_reads_n))
+	print ("   └--Reads_map_to_Reverse(Crick)_strand:\t%d\t(%.2f%%)" % (confi_reads_rev, confi_reads_rev*100.0/confi_reads_n))
 	print ('')
 
-	print ("   |--Reads with Error-Corrected cell barcode:\t%d\t(%.2f%%)" % (confi_CB, confi_CB*100.0/confi_reads_n))
-	print ("   └--Reads without Error-Corrected cell barcode:\t%d\t(%.2f%%)" % ((confi_reads_n - confi_CB), (confi_reads_n - confi_CB)*100.0/confi_reads_n))
+	print ("   |--Reads_map_to_sense_strand:\t%d\t(%.2f%%)" % (sense_reads, sense_reads*100.0/confi_reads_n))
+	print ("   └--Reads_map_to_antisense_strand:\t%d\t(%.2f%%)" % (anti_reads, anti_reads*100.0/confi_reads_n))
+	print ("   └--Other:\t%d\t(%.2f%%)" % (other_reads2, other_reads2*100.0/confi_reads_n))
 	print ('')
-	print ("   |--Reads with Error-Corrected UMI:\t%d\t(%.2f%%)" % (confi_UB, confi_UB*100.0/confi_reads_n))
-	print ("   └--Reads without Error-Corrected UMI:\t%d\t(%.2f%%)" % ((confi_reads_n - confi_UB), (confi_reads_n - confi_UB)*100.0/confi_reads_n))
+
+	print ("   |--Reads_map_to_exons:\t%d\t(%.2f%%)" % (exon_reads, exon_reads*100.0/confi_reads_n))
+	print ("   └--Reads_map_to_introns:\t%d\t(%.2f%%)" % (intron_reads, intron_reads*100.0/confi_reads_n))
+	print ("   └--Reads_map_to_intergenic:\t%d\t(%.2f%%)" % (intergenic_reads, intergenic_reads*100.0/confi_reads_n))
+	print ("   └--Other:\t%d\t(%.2f%%)" % (other_reads1, other_reads1*100.0/confi_reads_n))
+	print ('')
+
+	print ("   |--Reads_with_Error-Corrected_barcode:\t%d\t(%.2f%%)" % (confi_CB, confi_CB*100.0/confi_reads_n))
+	print ("   └--Reads_no_Error-Corrected_barcode:\t%d\t(%.2f%%)" % ((confi_reads_n - confi_CB), (confi_reads_n - confi_CB)*100.0/confi_reads_n))
+	print ('')
+	print ("   |--Reads_with_Error-Corrected_UMI:\t%d\t(%.2f%%)" % (confi_UB, confi_UB*100.0/confi_reads_n))
+	print ("   └--Reads_no_Error-Corrected_UMI:\t%d\t(%.2f%%)" % ((confi_reads_n - confi_UB), (confi_reads_n - confi_UB)*100.0/confi_reads_n))
 	print ('')
 
 	for i in sorted(read_type):
@@ -408,7 +368,8 @@ def mapping_stat(infile, outfile, step_size=10000, limit=1000000):
 		print ("   |--%s:\t%d\t(%.2f%%)" % (i, read_type[i], read_type[i]*100.0/confi_reads_n))
 	print ("   └--%s:\t%d\t(%.2f%%)" % ('Others', read_type['Others'], read_type['Others']*100.0/confi_reads_n))
 	print ('')
-	##add with/without CB
+
+
 
 def readCount(infile, outfile, step_size=10000, limit=1000000, csv_out=False):
 	'''

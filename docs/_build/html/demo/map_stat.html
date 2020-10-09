@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. seq_qual.py &mdash; bhive documentation</title>
+  <title>3. map_stat.py &mdash; bhive documentation</title>
   
 
   
@@ -36,8 +36,8 @@
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="LICENSE" href="../liscense.html" />
-    <link rel="prev" title="4. seq_logo.py" href="seq_logo.html" /> 
+    <link rel="next" title="4. seq_logo.py" href="seq_logo.html" />
+    <link rel="prev" title="2. cell_calling.py" href="cell_calling.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -108,15 +108,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="BC_edit_matrix.html">1. BC_edit_matrix.py</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cell_calling.html">2. cell_calling.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="map_stat.html">3. map_stat.py</a></li>
-<li class="toctree-l1"><a class="reference internal" href="seq_logo.html">4. seq_logo.py</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">5. seq_qual.py</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#description">5.1. Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options">5.2. Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#example">5.3. Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#output-files">5.4. Output files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. map_stat.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">3.1. Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options">3.2. Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">3.3. Example</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="seq_logo.html">4. seq_logo.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq_qual.html">5. seq_qual.py</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Liscense</span></p>
 <ul>
@@ -170,13 +169,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li><span class="section-number">5. </span>seq_qual.py</li>
+      <li><span class="section-number">3. </span>map_stat.py</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/demo/seq_qual.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/demo/map_stat.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -189,92 +188,114 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="seq-qual-py">
-<h1><span class="section-number">5. </span>seq_qual.py<a class="headerlink" href="#seq-qual-py" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="map-stat-py">
+<h1><span class="section-number">3. </span>map_stat.py<a class="headerlink" href="#map-stat-py" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description">
-<h2><span class="section-number">5.1. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>This program generates heatmap from a FASTQ file to visualize the sequencing quality.</p>
+<h2><span class="section-number">3.1. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Report reads mapping statistics</p>
 </div>
 <div class="section" id="options">
-<h2><span class="section-number">5.2. </span>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><dl class="option-list">
+<h2><span class="section-number">3.2. </span>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt>Options:</dt><dd><dl class="option-list">
 <dt><kbd><span class="option">--version</span></kbd></dt>
 <dd><p>show program’s version number and exit</p>
 </dd>
 <dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
 <dd><p>show this help message and exit</p>
 </dd>
-<dt><kbd><span class="option">-i <var>IN_FILE</var></span>, <span class="option">--infile=<var>IN_FILE</var></span></kbd></dt>
-<dd><p>Input file in FASTQ
-(<a class="reference external" href="https://en.wikipedia.org/wiki">https://en.wikipedia.org/wiki</a>/FASTQ_format#) format.</p>
+<dt><kbd><span class="option">-i <var>BAM_FILE</var></span>, <span class="option">--infile=<var>BAM_FILE</var></span></kbd></dt>
+<dd><p>Input file in BAM foramt. Must have BAM alignment tags
+indicated below.</p>
 </dd>
-<dt><kbd><span class="option">-o <var>OUT_FILE</var></span>, <span class="option">--outfile=<var>OUT_FILE</var></span></kbd></dt>
-<dd><p>The prefix of output files.</p>
+<dt><kbd><span class="option">--cb-tag=<var>CB_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicate error-corrected
+cellular barcode. default=’CB’</p>
 </dd>
-<dt><kbd><span class="option">-n <var>MAX_SEQ</var></span>, <span class="option">--nseq-limit=<var>MAX_SEQ</var></span></kbd></dt>
-<dd><p>Only process this many sequences and stop.
-default=none (generate logo from ALL sequences).</p>
+<dt><kbd><span class="option">--re-tag=<var>RE_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicate the region type of
+the alignment (E = exonic, N = intronic, I =
+intergenic). default=’RE’</p>
 </dd>
-<dt><kbd><span class="option">--cell-width=<var>CELL_WIDTH</var></span></kbd></dt>
-<dd><p>Cell width (in points) of the heatmap. default=12</p>
+<dt><kbd><span class="option">--tx-tag=<var>TX_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicate reads aligned to
+the same strand as the annotated transcripts.
+default=’TX’</p>
 </dd>
-<dt><kbd><span class="option">--cell-height=<var>CELL_HEIGHT</var></span></kbd></dt>
-<dd><p>Cell height (in points) of the heatmap. default=10</p>
+<dt><kbd><span class="option">--an-tag=<var>AN_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicate reads aligned to
+the antisense strand of the annotated transcripts.
+default=’AN’</p>
 </dd>
-<dt><kbd><span class="option">--font-size=<var>FONT_SIZE</var></span></kbd></dt>
-<dd><p>Font size in points. If –display-num was set,
-fontsize_number = 0.8 * font_size. default=6</p>
+<dt><kbd><span class="option">--umi-tag=<var>UMI_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicat the error-corrected
+UMI. default=’UB’</p>
 </dd>
-<dt><kbd><span class="option">--angle=<var>COL_ANGLE</var></span></kbd></dt>
-<dd><p>The angle (must be 0, 45, 90, 270, 315) of column text
-lables under the heatmap. default=45</p>
-</dd>
-<dt><kbd><span class="option">--text-color=<var>TEXT_COLOR</var></span></kbd></dt>
-<dd><p>The color of numbers in each cell. default=black</p>
-</dd>
-<dt><kbd><span class="option">--file-type=<var>FILE_TYPE</var></span></kbd></dt>
-<dd><p>The file type of heatmap. Choose one of ‘pdf’, ‘png’,
-‘tiff’, ‘bmp’, ‘jpeg’. default=pdf</p>
-</dd>
-<dt><kbd><span class="option">--no-num</span></kbd></dt>
-<dd><p>if set, will not print numerical values to cells.
-default=False</p>
+<dt><kbd><span class="option">--xf-tag=<var>XF_TAG</var></span></kbd></dt>
+<dd><p>BAM alignment tag. Used to indicate reads confidently
+mapped to the feature. default=’xf’</p>
 </dd>
 <dt><kbd><span class="option">--verbose</span></kbd></dt>
-<dd><p>If set, will produce detailed information for
-debugging.</p>
+<dd><p>Logical to determine if detailed running information
+is printed to screen.</p>
 </dd>
 </dl>
-</div></blockquote>
+</dd>
+</dl>
 </div>
 <div class="section" id="example">
-<h2><span class="section-number">5.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 seq_qual.py -i  ../normal_dat/indepth_C05_MissingLibrary_1_HL5G3BBXX/bamtofastq_S1_L004_R1_001.fastq.gz -n  5000000 -o R1_qual
+<h2><span class="section-number">3.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 map_stat2.py -i normal_possorted_genome_bam.bam
 
-2020-09-29 04:34:40 [INFO]  Reading FASTQ file &quot;../normal_dat/indepth_C05_MissingLibrary_1_HL5G3BBXX/bamtofastq_S1_L004_R1_001.fastq.gz&quot; ...
-2020-09-29 04:35:30 [INFO]  5000000 quality sequences finished
-2020-09-29 04:35:30 [INFO]  Make data frame from dict of dict ...
-2020-09-29 04:35:30 [INFO]  Filling NA as zero ...
-2020-09-29 04:35:30 [INFO]  Writing R code to &quot;R1_qual.qual_heatmap.r&quot;
-2020-09-29 04:35:30 [INFO]  Displayed numerical values on heatmap
-2020-09-29 04:35:30 [INFO]  Running R script file &quot;R1_qual.qual_heatmap.r&quot;
-Loading required package: Matrix
-Loading required package: SPAtest
-Loading required package: pheatmap
+2020-10-08 10:06:41 [INFO]  Reading BAM file &quot;normal_possorted_genome_bam.bam&quot; ...
+2020-10-08 10:06:41 [INFO]  Processing &quot;chr1&quot; ...
+2020-10-08 10:11:50 [INFO]  Processed 24729033 alignments mapped to: &quot;chr1&quot;
+2020-10-08 10:12:16 [INFO]  Processing &quot;chr10&quot; ...
+2020-10-08 10:17:57 [INFO]  Processed 26004376 alignments mapped to: &quot;chr10&quot;
+2020-10-08 10:18:27 [INFO]  Processing &quot;chr11&quot; ...
+2020-10-08 10:26:59 [INFO]  Processed 37558210 alignments mapped to: &quot;chr11&quot;
+...
+...
+
+Total_alignments: 589060389
+└--Confident_alignments: 443330914
+
+Total_mapped_reads:     589060389
+|--Non_confidently_mapped_reads:        145729475       (24.74%)
+└--Confidently_mapped_reads:    443330914       (75.26%)
+   |--Reads_with_PCR_duplicates:    327447641       (73.86%)
+   └--Reads_no_PCR_duplicates:        115883273       (26.14%)
+
+   |--Reads_map_to_forward(Waston)_strand:    259474203       (58.53%)
+   └--Reads_map_to_Reverse(Crick)_strand:     183856711       (41.47%)
+
+   |--Reads_map_to_sense_strand:      443330914       (100.00%)
+   └--Reads_map_to_antisense_strand:  0       (0.00%)
+   └--Other:    0       (0.00%)
+
+   |--Reads_map_to_exons:     443330914       (100.00%)
+   └--Reads_map_to_introns:   0       (0.00%)
+   └--Reads_map_to_intergenic:        0       (0.00%)
+   └--Other:    0       (0.00%)
+
+   |--Reads_with_Error-Corrected_barcode:       437707874       (98.73%)
+   └--Reads_no_Error-Corrected_barcode:    5623040 (1.27%)
+
+   |--Reads_with_Error-Corrected_UMI:   443184634       (99.97%)
+   └--Reads_no_Error-Corrected_UMI:        146280  (0.03%)
+
+   |--Reads_map_consecutively:        242755968       (54.76%)
+   |--Reads_map_with_clipping:        49473035        (11.16%)
+   |--Reads_map_with_splicing:        115086767       (25.96%)
+   |--Reads_map_with_splicing_and_clipping:   19346122        (4.36%)
+   └--Others:   16669022        (3.76%)
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Except the header section, each row in a BAM file represents an <em>alignment</em>.
+One read can have multiple alignments.</p>
 </div>
-<div class="section" id="output-files">
-<h2><span class="section-number">5.4. </span>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>R1_qual.qual_count.csv</p></li>
-<li><p>R1_qual.qual_heatmap.pdf</p></li>
-<li><p>R1_qual.qual_heatmap.r</p></li>
-<li><p>R1_qual.qual_percent.csv</p></li>
-</ul>
-<p>R1_qual.qual_heatmap.pdf</p>
-<a class="reference internal image-reference" href="../_images/R1_qual.qual_heatmap.png"><img alt="../_images/R1_qual.qual_heatmap.png" src="../_images/R1_qual.qual_heatmap.png" style="width: 900.0px; height: 250.0px;" /></a>
 </div>
 </div>
 
@@ -286,10 +307,10 @@ Loading required package: pheatmap
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../liscense.html" class="btn btn-neutral float-right" title="LICENSE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="seq_logo.html" class="btn btn-neutral float-right" title="4. seq_logo.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="seq_logo.html" class="btn btn-neutral float-left" title="4. seq_logo.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cell_calling.html" class="btn btn-neutral float-left" title="2. cell_calling.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

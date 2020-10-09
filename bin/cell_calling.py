@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-First, calculates the "read count" and "UMI count" for each cell barcode, and generates the
-barcode rank plot and density plot. Then, using the Bayesian Gaussian Mixture Model (BGMM)
-to classify cell barcode into "valid" and "background" groups.
+Call cells from background.
+First, calculates the "read count" and "UMI count" for each barcode (i.e. cell
+barcode),and generates the barcode rank plot and density plot. Then, using the
+Bayesian Gaussian Mixture Model (BGMM) to classify barcodes into "cell-associated"
+and "background-associated".
 
 """
 import sys
@@ -92,13 +94,9 @@ def main():
 	print (r'read_dat <-  read_dat[order(read_dat$log10_count, decreasing=TRUE),]', file=ROUT)
 	print (r'cell_num <- sum(read_dat$Assigned_lable=="cell")', file=ROUT)
 
-	print (r'dat0 = data.frame(logcount = read_dat$log10_count[read_dat$Assigned_lable=="background"], group="Background")', file=ROUT)
-	print (r'dat1 = data.frame(logcount = read_dat$log10_count[read_dat$Assigned_lable=="cell"], group="Cell")', file=ROUT)
-	print (r'dat2 = data.frame(logcount = read_dat$log10_count[read_dat$Assigned_lable=="unknown"], group="Unknown")', file=ROUT)
-	print (r'dat3 = rbind(dat0, dat1, dat2)', file=ROUT)
 	print (r'x1 <- 1:length(read_dat$log10_count)', file = ROUT)
 	print ('\n', file=ROUT)
-	print (r'A = ggplot(dat3, aes(logcount, fill=group, colour=group)) + geom_histogram(aes(y=..density..), alpha=0.6, position="identity", lwd=0.2, bins=50)  + xlab("Log10(read count)") + ylab("Cell barcode density") + geom_density(alpha=.2) + ggtitle(paste(c("Density plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position=c(0.75, 0.75))', file=ROUT)
+	print (r'A = ggplot(read_dat, aes(log10_count, fill=Assigned_lable, colour=Assigned_lable)) + geom_histogram(aes(y=..density..), alpha=0.6, position="identity", lwd=0.2, bins=50)  + xlab("Log10(read count)") + ylab("Cell barcode density") + geom_density(alpha=.2) + ggtitle(paste(c("Density plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position=c(0.75, 0.75))', file=ROUT)
 	print (r'B = ggplot(read_dat, aes(x=x1,y=log10_count)) + geom_point(aes(color = Assigned_lable), size=0.5) + xlab("Index of cell barcode") + ylab("Log10(read count)") + ggtitle(paste(c("Barcode rank plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position=c(0.75, 0.75))', file=ROUT)
 	print (r'C = ggplot(read_dat, aes(x=cell_prob,y=log10_count)) + geom_point(aes(color = Assigned_lable), size=0.5) + xlab("Probability") +  ylab("Log10(read count)") + ggtitle(paste(c("Probability rank plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position="None")', file=ROUT)
 
@@ -108,13 +106,9 @@ def main():
 	print (r'umi_dat <-  umi_dat[order(umi_dat$log10_count, decreasing=TRUE),]', file=ROUT)
 	print (r'cell_num <- sum(umi_dat$Assigned_lable=="cell")', file=ROUT)
 
-	print (r'dat3 = data.frame(logcount = umi_dat$log10_count[umi_dat$Assigned_lable=="background"], group="Background")', file=ROUT)
-	print (r'dat4 = data.frame(logcount = umi_dat$log10_count[umi_dat$Assigned_lable=="cell"], group="Cell")', file=ROUT)
-	print (r'dat5 = data.frame(logcount = umi_dat$log10_count[umi_dat$Assigned_lable=="unknown"], group="Unknown")', file=ROUT)
-	print (r'dat6 = rbind(dat3, dat4, dat5)', file=ROUT)
 	print (r'x2 <- 1:length(umi_dat$log10_count)', file = ROUT)
 	print ('\n', file=ROUT)
-	print (r'D = ggplot(dat6, aes(logcount, fill=group, colour=group)) + geom_histogram(aes(y=..density..), alpha=0.6, position="identity", lwd=0.2, bins=50)  + xlab("Log10(UMI count)") + ylab("Cell barcode density") + geom_density(alpha=.2) + ggtitle(paste(c("Density plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position="None")', file=ROUT)
+	print (r'D = ggplot(umi_dat, aes(log10_count, fill=Assigned_lable, colour=Assigned_lable)) + geom_histogram(aes(y=..density..), alpha=0.6, position="identity", lwd=0.2, bins=50)  + xlab("Log10(UMI count)") + ylab("Cell barcode density") + geom_density(alpha=.2) + ggtitle(paste(c("Density plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position="None")', file=ROUT)
 	print (r'E = ggplot(umi_dat, aes(x = x2, y = log10_count)) + geom_point(aes(color = Assigned_lable), size=0.5) + xlab("Index of cell barcode") + ylab("Log10(UMI count)") + ggtitle(paste(c("Barcode rank plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position="None")', file=ROUT)
 	print (r'F = ggplot(umi_dat, aes(x = cell_prob, y = log10_count)) + geom_point(aes(color = Assigned_lable), size=0.5) + xlab("Probability") +  ylab("Log10(UMI count)") + ggtitle(paste(c("Probability rank plot,", cell_num, "cells"), collapse = " ")) + theme(legend.position="None")', file=ROUT)
 	print ('\n', file=ROUT)

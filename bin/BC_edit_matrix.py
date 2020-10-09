@@ -32,7 +32,7 @@ __status__ = "Production"
 
 
 def main():
-	usage = "\n%prog  [options]"
+	usage = __doc__
 	parser = OptionParser(usage,version="%prog " + __version__)
 	parser.add_option("-i","--infile",action="store",type="string", dest="in_file",help="Input file in BAM foramt.")
 	parser.add_option("-o","--outfile",action="store",type="string", dest="out_file",help="The prefix of output files.")
@@ -62,7 +62,7 @@ def main():
 			parser.print_help()
 			sys.exit(0)
 
-	scbam.barcode_stat(infile = options.in_file, outfile = options.out_file, limit = options.reads_num, CR_tag = options.CR_tag, CB_tag = options.CB_tag, UR_tag = options.UR_tag, UB_tag = options.UB_tag)
+	scbam.barcode_edits(infile = options.in_file, outfile = options.out_file, limit = options.reads_num, CR_tag = options.CR_tag, CB_tag = options.CB_tag, UR_tag = options.UR_tag, UB_tag = options.UB_tag)
 
 	CB_mat_file = options.out_file + '.CB_edits_count.csv'
 	CB_heatmap_file = options.out_file + '.CB_edits_heatmap'

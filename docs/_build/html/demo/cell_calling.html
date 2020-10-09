@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. cell_calling.py &mdash; bhive documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. map_stat.py" href="map_stat.html" />
+    <link rel="prev" title="1. BC_edit_matrix.py" href="BC_edit_matrix.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> bhive
+          
+
+          
+            
+            <img src="../_static/bhive_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">1. Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Change log</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../change_log.html">1. bhive Release history</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Test Dataset</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dataset.html">1. Testing dataset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Usage Information</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="BC_edit_matrix.html">1. BC_edit_matrix.py</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. cell_calling.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">2.1. Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">2.2. Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">2.3. Output files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="map_stat.html">3. map_stat.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq_logo.html">4. seq_logo.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq_qual.html">5. seq_qual.py</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Liscense</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../liscense.html">LICENSE</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">bhive</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">2. </span>cell_calling.py</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/demo/cell_calling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cell-calling-py">
+<h1><span class="section-number">2. </span>cell_calling.py<a class="headerlink" href="#cell-calling-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2><span class="section-number">2.1. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Call cells from background.</p>
+<ul class="simple">
+<li><p>First, calculates the “read count” and “UMI count” for each barcode (i.e. cell
+barcode),and generates the barcode rank plot and density plot.</p></li>
+<li><p>Then, using the Bayesian Gaussian Mixture Model (BGMM) to classify barcodes into “cell-associated”
+and “background-associated”.</p></li>
+</ul>
+<dl>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">--version</span></kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+<dt><kbd><span class="option">-i <var>IN_FILE</var></span>, <span class="option">--infile=<var>IN_FILE</var></span></kbd></dt>
+<dd><p>Input file in BAM foramt.</p>
+</dd>
+<dt><kbd><span class="option">-o <var>OUT_FILE</var></span>, <span class="option">--outfile=<var>OUT_FILE</var></span></kbd></dt>
+<dd><p>The prefix of output files.</p>
+</dd>
+<dt><kbd><span class="option">--cb-tag=<var>CB_TAG</var></span></kbd></dt>
+<dd><p>Tag of error-corrected cellular barcode in BAM file.
+default=’CB’</p>
+</dd>
+<dt><kbd><span class="option">--umi-tag=<var>UMI_TAG</var></span></kbd></dt>
+<dd><p>Tag of error-corrected UMI in BAM file. default=’UB’</p>
+</dd>
+<dt><kbd><span class="option">--cb-num=<var>CB_LIMIT</var></span></kbd></dt>
+<dd><p>Maximum cell barcodes (ranked by associated UMI frequency)
+analysed. default=100000</p>
+</dd>
+<dt><kbd><span class="option">--min-read-count=<var>MIN_READS</var></span></kbd></dt>
+<dd><p>The minimum number of reads to filter out cell
+barcode. default=200</p>
+</dd>
+<dt><kbd><span class="option">-r</span>, <span class="option">--report</span></kbd></dt>
+<dd><p>If set, generates report file for mixture models.
+default=False</p>
+</dd>
+<dt><kbd><span class="option">-s <var>RANDOM_STATE</var></span>, <span class="option">--seed=<var>RANDOM_STATE</var></span></kbd></dt>
+<dd><p>The seed used by the random number generator.
+default=0</p>
+</dd>
+<dt><kbd><span class="option">--prob-cut=<var>PROBABILITY_CUTOFF</var></span></kbd></dt>
+<dd><p>The probabiilty cutoff [0.5, 1] to assign cell barcode
+to the “cell” or the “background” component.
+default=0.5</p>
+</dd>
+<dt><kbd><span class="option">--verbose</span></kbd></dt>
+<dd><p>If set, print detailed information for debugging.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<h2><span class="section-number">2.2. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 cell_barcode.py -i possorted_genome_confident.bam -o output
+
+2020-10-05 02:44:42 [INFO]  Top 100000 cell barcodes (ranked by associated UMI frequency) will be analyzed.
+2020-10-05 02:44:42 [INFO]  Only count UMIs for cell barcodes with more than 200 reads.
+2020-10-05 02:44:42 [INFO]  Reading BAM file &quot;possorted_genome_confident.bam&quot;. Count reads for each cell barcode ...
+2020-10-05 02:59:37 [INFO]  Total 98839578 alignments processed
+2020-10-05 02:59:37 [INFO]  Filtering cell barcodes ...
+2020-10-05 02:59:37 [INFO]  Total cell barcode: 856517
+2020-10-05 02:59:37 [INFO]  Cell barcode with more than 200 reads: 8204
+2020-10-05 02:59:37 [INFO]  Reading BAM file &quot;possorted_genome_confident.bam&quot;. Count UMIs for each cell barcode ...
+2020-10-05 03:15:33 [INFO]  Total 90458232 alignments processed
+2020-10-05 03:15:33 [INFO]  Writing cell barcodes&#39; reads and UMI frequencies to &quot;output.Read_UMI_freq.tsv&quot;
+2020-10-05 03:15:33 [INFO]  Done.
+2020-10-05 03:15:38 [INFO]  Read output.Read_UMI_freq.tsv to build Bayesian Gaussian Mixture Model (BGMM)...
+2020-10-05 03:15:38 [INFO]  Reading input file: &quot;output.Read_UMI_freq.tsv&quot;
+2020-10-05 03:15:38 [INFO]     Total analyzed barcodes: 8204
+2020-10-05 03:15:38 [INFO]  Build BGMM ...
+2020-10-05 03:15:38 [INFO]  Building Bayesian Gaussian Mixture model for subject: UMI_count ...
+2020-10-05 03:15:40 [INFO]  Building Bayesian Gaussian Mixture model for subject: read_count ...
+2020-10-05 03:15:40 [INFO]  Classify cell barcode using the BGMM models ...
+2020-10-05 03:15:40 [INFO]  Writing to &quot;output.UMI_count_classification.txt&quot; ...
+2020-10-05 03:15:40 [INFO]  Writing to &quot;output.read_count_classification.txt&quot; ...
+2020-10-05 03:15:40 [INFO]  Writing R script to &quot;output.Read_UMI_freq.r&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-files">
+<h2><span class="section-number">2.3. </span>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>output.read_count_classification.txt</strong> and <strong>output.UMI_count_classification.txt</strong>. Classify cell barcodes according to read (or UMI) count.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Column-1 : The barcode sequence.</p></li>
+<li><p>Column-2 : Read/UMI count in log10 scale.</p></li>
+<li><p>Column-3 : The probability that this barcode belonging to “background” group.</p></li>
+<li><p>Column-4 : The probability that this barcode belonging to “cell” group.</p></li>
+<li><p>Column-5 : Assigned lable (“cell”, “unknown” or “background”).</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 18%" />
+<col style="width: 24%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Barcode</p></td>
+<td><p>log10_count</p></td>
+<td><p>background_prob</p></td>
+<td><p>cell_prob</p></td>
+<td><p>Lable</p></td>
+</tr>
+<tr class="row-even"><td><p>AACAACCCAGTTCTAG</p></td>
+<td><p>5.68488933</p></td>
+<td><p>1.03E-73</p></td>
+<td><p>1</p></td>
+<td><p>cell</p></td>
+</tr>
+<tr class="row-odd"><td><p>CTATCCGCATGGATCT</p></td>
+<td><p>5.61115166</p></td>
+<td><p>2.05E-70</p></td>
+<td><p>1</p></td>
+<td><p>cell</p></td>
+</tr>
+<tr class="row-even"><td><p>AATCGTGTCTTTGATC</p></td>
+<td><p>5.55137314</p></td>
+<td><p>8.49E-68</p></td>
+<td><p>1</p></td>
+<td><p>cell</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>GAACGTTTCGGCAGTC</p></td>
+<td><p>2.30103</p></td>
+<td><p>0.98811857</p></td>
+<td><p>0.01188143</p></td>
+<td><p>background</p></td>
+</tr>
+<tr class="row-odd"><td><p>CATCCACAGGCGAAGG</p></td>
+<td><p>2.32633586</p></td>
+<td><p>0.98862923</p></td>
+<td><p>0.01137077</p></td>
+<td><p>background</p></td>
+</tr>
+<tr class="row-even"><td><p>TCACGGGGTGATATAG</p></td>
+<td><p>2.31175386</p></td>
+<td><p>0.98836594</p></td>
+<td><p>0.01163406</p></td>
+<td><p>background</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="2">
+<li><p>output.Read_UMI_freq.tsv</p></li>
+</ol>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 36%" />
+<col style="width: 24%" />
+<col style="width: 22%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Serial#</p></td>
+<td><p>Cell_barcode</p></td>
+<td><p>read_count</p></td>
+<td><p>UMI_count</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>AACAACCCAGTTCTAG</p></td>
+<td><p>484049</p></td>
+<td><p>202124</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>CTATCCGCATGGATCT</p></td>
+<td><p>408462</p></td>
+<td><p>184155</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>AATCGTGTCTTTGATC</p></td>
+<td><p>355937</p></td>
+<td><p>165832</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>CTTCTCTGTTGTCCCT</p></td>
+<td><p>349352</p></td>
+<td><p>159697</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>GAGAAATCATGACACT</p></td>
+<td><p>362654</p></td>
+<td><p>153856</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="3">
+<li><p>output.Read_UMI_freq.r</p></li>
+</ol>
+<p>Generate figure as below. Panels A, B, C were generated from <strong>read count</strong>,
+and panels D, E, F were generated from <strong>UMI count</strong>. (A) and (D) Density plots of cell barcodes that have been
+classified into <strong>background</strong> (red) and <strong>cells</strong> (blue). (B) and (E) Barcode rank plots of all cell barcodes.
+(C) and (F) Probability rank plots of all cell barcodes.</p>
+<a class="reference internal image-reference" href="../_images/barcode_classify.prob_cut_0.5.png"><img alt="../_images/barcode_classify.prob_cut_0.5.png" src="../_images/barcode_classify.prob_cut_0.5.png" style="width: 800.0px; height: 600.0px;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the cell barcodes were classified into <strong>two</strong> groups, because the default <code class="docutils literal notranslate"><span class="pre">--prob-cut</span></code> is 0.5.
+In this Scenario, each barcode was either classified into <strong>cell</strong> group (when prob &gt;= 0.5)
+or <strong>background</strong> group (when prob &lt; 0.5). If the <code class="docutils literal notranslate"><span class="pre">--prob-cut</span></code> is set to 0.95, cell barcodes
+will be classified into three groups: “cell” (when cell_prob &gt;= 0.95), “background” (when background_prob &gt;= 0.95)
+and “unknown” (cell_prob &lt; 0.95 and background_prob &lt; 0.95). Please see figure below.</p>
+</div>
+<a class="reference internal image-reference" href="../_images/barcode_classify.prob_cut_0.95.png"><img alt="../_images/barcode_classify.prob_cut_0.95.png" src="../_images/barcode_classify.prob_cut_0.95.png" style="width: 800.0px; height: 600.0px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="map_stat.html" class="btn btn-neutral float-right" title="3. map_stat.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="BC_edit_matrix.html" class="btn btn-neutral float-left" title="1. BC_edit_matrix.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Liguo Wang et al
+      <span class="lastupdated">
+        Last updated on July 9, 2020.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-XXXXXXX-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
