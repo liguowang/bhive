@@ -188,7 +188,7 @@ def barcode_edits(infile, outfile, step_size=10000, limit=2000000, CR_tag = 'CR'
 
 
 
-def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag = 'RE', TX_tag = 'TX', AN_tag = 'AN', xf_tag = 'xf'):
+def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag = 'RE', TX_tag = 'TX', AN_tag = 'AN', xf_tag = 'xf', chrM_id ='chrM'):
 	'''
 	Reads mapping statistics
 
@@ -235,6 +235,7 @@ def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag 
 	anti_reads = 0
 	other_reads2 =0
 
+	chrM_reads = 0
 	#read match type
 	read_type = collections.defaultdict(int)
 
@@ -258,6 +259,8 @@ def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag 
 			#confident alignments
 			if xf_tag in tag_dict and tag_dict[xf_tag]& 0x1 != 0:
 
+				if chr_id == chrM_id:
+					chrM_reads += 1
 				#with or without CB/UMI barcode
 				if CB_tag in tag_dict:
 					confi_CB += 1
@@ -329,6 +332,7 @@ def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag 
 	confi_reads_n = int(output2.decode('utf-8').strip())
 	non_confi_reads = total_reads_n - confi_reads_n
 
+
 	print ('')
 	print("\nTotal_alignments: %d" % total_alignments)
 	print ("└--Confident_alignments: %d" % confi_alignments)
@@ -361,6 +365,10 @@ def mapping_stat(infile,  step_size=50000, CB_tag = 'CB', UMI_tag = 'UB',RE_tag 
 	print ('')
 	print ("   |--Reads_with_Error-Corrected_UMI:\t%d\t(%.2f%%)" % (confi_UB, confi_UB*100.0/confi_reads_n))
 	print ("   └--Reads_no_Error-Corrected_UMI:\t%d\t(%.2f%%)" % ((confi_reads_n - confi_UB), (confi_reads_n - confi_UB)*100.0/confi_reads_n))
+	print ('')
+	print ("   |--Reads_map_to_mitochonrial_genome:\t%d\t(%.2f%%)" % (chrM_reads, chrM_reads*100.0/confi_reads_n))
+	print ("   └--Reads_map_to_nuclear_genome:\t%d\t(%.2f%%)" % ((confi_reads_n - chrM_reads), (confi_reads_n - chrM_reads)*100.0/confi_reads_n))
+
 	print ('')
 
 	for i in sorted(read_type):
@@ -451,7 +459,7 @@ def readCount(infile, outfile, step_size=10000, limit=1000000, csv_out=False):
 	"""
 
 
-def CBC_UMIcount(infile, outfile, step_size=10000, CB_tag = 'CB', UMI_tag = 'UB', CB_num = 100000, read_num=200):
+def CBC_UMIcount(infile, outfile, step_size=50000, CB_tag = 'CB', UMI_tag = 'UB', CB_num = 100000, read_num=200):
 	'''
 	Calculate UMI count for each cell barcode.
 

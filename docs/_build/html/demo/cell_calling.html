@@ -406,10 +406,12 @@ classified into <strong>background</strong> (red) and <strong>cells</strong> (bl
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>All the cell barcodes were classified into <strong>two</strong> groups, because the default <code class="docutils literal notranslate"><span class="pre">--prob-cut</span></code> is 0.5.
-In this Scenario, each barcode was either classified into <strong>cell</strong> group (when prob &gt;= 0.5)
-or <strong>background</strong> group (when prob &lt; 0.5). If the <code class="docutils literal notranslate"><span class="pre">--prob-cut</span></code> is set to 0.95, cell barcodes
-will be classified into three groups: “cell” (when cell_prob &gt;= 0.95), “background” (when background_prob &gt;= 0.95)
-and “unknown” (cell_prob &lt; 0.95 and background_prob &lt; 0.95). Please see figure below.</p>
+In this Scenario, each barcode was either classified into <strong>cell-associated</strong> group (when prob &gt;= 0.5)
+or <strong>background-associated</strong> group (when prob &lt; 0.5). If the <code class="docutils literal notranslate"><span class="pre">--prob-cut</span></code> is set to 0.95, cell barcodes
+will be classified into three groups: “cell-associated” (when cell_prob &gt;= 0.95),
+“background-associated” (when background_prob &gt;= 0.95) and “unknown” (cell_prob &lt; 0.9
+and background_prob &lt; 0.95). The “unknown” group might contains cells with low RNA content.
+Please see figure below.</p>
 </div>
 <a class="reference internal image-reference" href="../_images/barcode_classify.prob_cut_0.95.png"><img alt="../_images/barcode_classify.prob_cut_0.95.png" src="../_images/barcode_classify.prob_cut_0.95.png" style="width: 800.0px; height: 600.0px;" /></a>
 </div>

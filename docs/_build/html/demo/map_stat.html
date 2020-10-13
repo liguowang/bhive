@@ -110,8 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cell_calling.html">2. cell_calling.py</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. map_stat.py</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#description">3.1. Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#options">3.2. Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#example">3.3. Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">3.2. Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="seq_logo.html">4. seq_logo.py</a></li>
@@ -193,9 +192,6 @@
 <div class="section" id="description">
 <h2><span class="section-number">3.1. </span>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>Report reads mapping statistics</p>
-</div>
-<div class="section" id="options">
-<h2><span class="section-number">3.2. </span>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
 <dl>
 <dt>Options:</dt><dd><dl class="option-list">
 <dt><kbd><span class="option">--version</span></kbd></dt>
@@ -235,6 +231,10 @@ UMI. default=’UB’</p>
 <dd><p>BAM alignment tag. Used to indicate reads confidently
 mapped to the feature. default=’xf’</p>
 </dd>
+<dt><kbd><span class="option">--chrM-id=<var>MIT_CONTIG_NAME</var></span></kbd></dt>
+<dd><p>The name of mitochondrial chromosome in BAM file.
+default=’chrM’</p>
+</dd>
 <dt><kbd><span class="option">--verbose</span></kbd></dt>
 <dd><p>Logical to determine if detailed running information
 is printed to screen.</p>
@@ -244,7 +244,7 @@ is printed to screen.</p>
 </dl>
 </div>
 <div class="section" id="example">
-<h2><span class="section-number">3.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.2. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 map_stat2.py -i normal_possorted_genome_bam.bam
 
 2020-10-08 10:06:41 [INFO]  Reading BAM file &quot;normal_possorted_genome_bam.bam&quot; ...
@@ -263,31 +263,34 @@ Total_alignments: 589060389
 Total_mapped_reads:     589060389
 |--Non_confidently_mapped_reads:        145729475       (24.74%)
 └--Confidently_mapped_reads:    443330914       (75.26%)
-   |--Reads_with_PCR_duplicates:    327447641       (73.86%)
-   └--Reads_no_PCR_duplicates:        115883273       (26.14%)
+   |--Reads_with_PCR_duplicates:        327447641       (73.86%)
+   └--Reads_no_PCR_duplicates:  115883273       (26.14%)
 
-   |--Reads_map_to_forward(Waston)_strand:    259474203       (58.53%)
-   └--Reads_map_to_Reverse(Crick)_strand:     183856711       (41.47%)
+   |--Reads_map_to_forward(Waston)_strand:      259474203       (58.53%)
+   └--Reads_map_to_Reverse(Crick)_strand:       183856711       (41.47%)
 
-   |--Reads_map_to_sense_strand:      443330914       (100.00%)
-   └--Reads_map_to_antisense_strand:  0       (0.00%)
+   |--Reads_map_to_sense_strand:        443330914       (100.00%)
+   └--Reads_map_to_antisense_strand:    0       (0.00%)
    └--Other:    0       (0.00%)
 
-   |--Reads_map_to_exons:     443330914       (100.00%)
-   └--Reads_map_to_introns:   0       (0.00%)
-   └--Reads_map_to_intergenic:        0       (0.00%)
+   |--Reads_map_to_exons:       443330914       (100.00%)
+   └--Reads_map_to_introns:     0       (0.00%)
+   └--Reads_map_to_intergenic:  0       (0.00%)
    └--Other:    0       (0.00%)
 
    |--Reads_with_Error-Corrected_barcode:       437707874       (98.73%)
-   └--Reads_no_Error-Corrected_barcode:    5623040 (1.27%)
+   └--Reads_no_Error-Corrected_barcode: 5623040 (1.27%)
 
    |--Reads_with_Error-Corrected_UMI:   443184634       (99.97%)
-   └--Reads_no_Error-Corrected_UMI:        146280  (0.03%)
+   └--Reads_no_Error-Corrected_UMI:     146280  (0.03%)
 
-   |--Reads_map_consecutively:        242755968       (54.76%)
-   |--Reads_map_with_clipping:        49473035        (11.16%)
-   |--Reads_map_with_splicing:        115086767       (25.96%)
-   |--Reads_map_with_splicing_and_clipping:   19346122        (4.36%)
+   |--Reads_map_to_mitochonrial_genome: 56744099        (12.80%)
+   └--Reads_map_to_nuclear_genome:      386586815       (87.20%)
+
+   |--Map_consecutively:        242755968       (54.76%)
+   |--Map_with_clipping:        49473035        (11.16%)
+   |--Map_with_splicing:        115086767       (25.96%)
+   |--Map_with_splicing_and_clipping:   19346122        (4.36%)
    └--Others:   16669022        (3.76%)
 </pre></div>
 </div>

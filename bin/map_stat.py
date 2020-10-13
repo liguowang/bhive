@@ -62,6 +62,7 @@ def main():
 	parser.add_option("--an-tag",action="store",type="string", dest="AN_tag", default='AN', help="BAM alignment tag. Used to indicate reads aligned to the antisense strand of the annotated transcripts. default=\'%default\'")
 	parser.add_option("--umi-tag",action="store",type="string", dest="UMI_tag", default='UB', help="BAM alignment tag. Used to indicat the error-corrected UMI. default=\'%default\'")
 	parser.add_option("--xf-tag",action="store",type="string", dest="xf_tag", default='xf', help="BAM alignment tag. Used to indicate reads confidently mapped to the feature. default=\'%default\'")
+	parser.add_option("--chrM-id",action="store",type="string", dest="mit_contig_name", default='chrM', help="The name of mitochondrial chromosome in BAM file. default=\'%default\'")
 	parser.add_option("--verbose",action="store_true",dest="debug",default=False,help="Logical to determine if detailed running information is printed to screen.")
 
 	(options,args)=parser.parse_args()
@@ -75,7 +76,7 @@ def main():
 			parser.print_help()
 			sys.exit(0)
 
-	scbam.mapping_stat(infile = options.bam_file, CB_tag = options.CB_tag, UMI_tag = options.UMI_tag, xf_tag = options.xf_tag, RE_tag = options.RE_tag, TX_tag = options.TX_tag, AN_tag = options.AN_tag)
+	scbam.mapping_stat(infile = options.bam_file, CB_tag = options.CB_tag, UMI_tag = options.UMI_tag, xf_tag = options.xf_tag, RE_tag = options.RE_tag, TX_tag = options.TX_tag, AN_tag = options.AN_tag, chrM_id = options.mit_contig_name)
 	logging.info ("Done.")
 
 if __name__=='__main__':

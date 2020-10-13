@@ -131,10 +131,12 @@ classified into **background** (red) and **cells** (blue). (B) and (E) Barcode r
 .. note::
 
    All the cell barcodes were classified into **two** groups, because the default ``--prob-cut`` is 0.5. 
-   In this Scenario, each barcode was either classified into **cell** group (when prob >= 0.5)
-   or **background** group (when prob < 0.5). If the ``--prob-cut`` is set to 0.95, cell barcodes
-   will be classified into three groups: "cell" (when cell_prob >= 0.95), "background" (when background_prob >= 0.95)
-   and "unknown" (cell_prob < 0.95 and background_prob < 0.95). Please see figure below.
+   In this Scenario, each barcode was either classified into **cell-associated** group (when prob >= 0.5)
+   or **background-associated** group (when prob < 0.5). If the ``--prob-cut`` is set to 0.95, cell barcodes
+   will be classified into three groups: "cell-associated" (when cell_prob >= 0.95), 
+   "background-associated" (when background_prob >= 0.95) and "unknown" (cell_prob < 0.9
+   and background_prob < 0.95). The "unknown" group might contains cells with low RNA content.
+   Please see figure below.
 
 
 .. image:: ../_static/barcode_classify.prob_cut_0.95.png

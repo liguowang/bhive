@@ -7,9 +7,6 @@ Description
 Report reads mapping statistics
 
 
-Options
--------
-
 Options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
@@ -31,9 +28,12 @@ Options:
                         UMI. default='UB'
   --xf-tag=XF_TAG       BAM alignment tag. Used to indicate reads confidently
                         mapped to the feature. default='xf'
+  --chrM-id=MIT_CONTIG_NAME
+                        The name of mitochondrial chromosome in BAM file.
+                        default='chrM'
   --verbose             Logical to determine if detailed running information
                         is printed to screen.
-                        
+
 Example
 -------
 
@@ -58,32 +58,36 @@ Example
  Total_mapped_reads:     589060389
  |--Non_confidently_mapped_reads:        145729475       (24.74%)
  └--Confidently_mapped_reads:    443330914       (75.26%)
-    |--Reads_with_PCR_duplicates:    327447641       (73.86%)
-    └--Reads_no_PCR_duplicates:        115883273       (26.14%)
+    |--Reads_with_PCR_duplicates:        327447641       (73.86%)
+    └--Reads_no_PCR_duplicates:  115883273       (26.14%)
  
-    |--Reads_map_to_forward(Waston)_strand:    259474203       (58.53%)
-    └--Reads_map_to_Reverse(Crick)_strand:     183856711       (41.47%)
+    |--Reads_map_to_forward(Waston)_strand:      259474203       (58.53%)
+    └--Reads_map_to_Reverse(Crick)_strand:       183856711       (41.47%)
  
-    |--Reads_map_to_sense_strand:      443330914       (100.00%)
-    └--Reads_map_to_antisense_strand:  0       (0.00%)
+    |--Reads_map_to_sense_strand:        443330914       (100.00%)
+    └--Reads_map_to_antisense_strand:    0       (0.00%)
     └--Other:    0       (0.00%)
  
-    |--Reads_map_to_exons:     443330914       (100.00%)
-    └--Reads_map_to_introns:   0       (0.00%)
-    └--Reads_map_to_intergenic:        0       (0.00%)
+    |--Reads_map_to_exons:       443330914       (100.00%)
+    └--Reads_map_to_introns:     0       (0.00%)
+    └--Reads_map_to_intergenic:  0       (0.00%)
     └--Other:    0       (0.00%)
  
     |--Reads_with_Error-Corrected_barcode:       437707874       (98.73%)
-    └--Reads_no_Error-Corrected_barcode:    5623040 (1.27%)
+    └--Reads_no_Error-Corrected_barcode: 5623040 (1.27%)
  
     |--Reads_with_Error-Corrected_UMI:   443184634       (99.97%)
-    └--Reads_no_Error-Corrected_UMI:        146280  (0.03%)
+    └--Reads_no_Error-Corrected_UMI:     146280  (0.03%) 
  
-    |--Reads_map_consecutively:        242755968       (54.76%)
-    |--Reads_map_with_clipping:        49473035        (11.16%)
-    |--Reads_map_with_splicing:        115086767       (25.96%)
-    |--Reads_map_with_splicing_and_clipping:   19346122        (4.36%)
+    |--Reads_map_to_mitochonrial_genome: 56744099        (12.80%)
+    └--Reads_map_to_nuclear_genome:      386586815       (87.20%)
+ 
+    |--Map_consecutively:        242755968       (54.76%)
+    |--Map_with_clipping:        49473035        (11.16%)
+    |--Map_with_splicing:        115086767       (25.96%)
+    |--Map_with_splicing_and_clipping:   19346122        (4.36%)
     └--Others:   16669022        (3.76%)
+   
    
 .. Note::
    Except the header section, each row in a BAM file represents an *alignment*.
